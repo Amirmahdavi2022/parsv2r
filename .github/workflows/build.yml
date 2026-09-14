@@ -151,18 +151,31 @@ jobs:
         with:
           path: release
 
-      - name: Sign APK files
+      - name: Collect and (optionally) GPG-sign the APKs
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         run: |
-          printf '%s' "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-          KEY=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr:/ {print $10; exit}')
+          set -euo pipefail
           mkdir -p release-files
+          find release -type f -name '*.apk' -exec cp {} release-files/ \;
 
-          find release -type f -name '*.apk' | while read apk; do
-            cp "$apk" release-files/
-            gpg --batch --yes --local-user "$KEY" --detach-sign --output "release-files/$(basename "$apk").sig" "$apk"
+          # A checksum file is always produced. GPG signatures are only produced when a key is
+          # configured -- the APKs are already signed with the app's release key, and GPG is a
+          # second, separate guarantee about who published the file. Without this guard the whole
+          # release job died on an empty secret and nothing was published at all.
+          ( cd release-files && sha256sum *.apk > SHA256SUMS )
+
+          if [ -z "${GPG_PRIVATE_KEY:-}" ]; then
+            echo "No GPG key configured; publishing APKs and checksums only."
+            exit 0
+          fi
+
+          printf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
+          KEY=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr:/ {print $10; exit}')
+          for apk in release-files/*.apk; do
+            gpg --batch --yes --local-user "$KEY" --detach-sign --output "$apk.sig" "$apk"
           done
-
-          gpg --armor --export "$KEY" > release-files/v2rayN-public-key.asc
+          gpg --armor --export "$KEY" > release-files/parsv2r-public-key.asc
 
       - name: Upload APKs, signatures and public key to release
         uses: svenstaro/upload-release-action@v2
