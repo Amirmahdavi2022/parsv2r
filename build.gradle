@@ -1,7 +1,9 @@
 // Root build file. Plugin versions live here so the modules stay short.
 plugins {
+    // Only third-party plugins are declared here. java-library is a core Gradle plugin and is
+    // already on the classpath, so requesting it with `apply false` is rejected outright -- and
+    // because that is a configuration-time failure, it takes down every task in every module.
     id 'com.android.application' version '8.7.3' apply false
-    id 'java-library' apply false
 }
 
 tasks.register('clean', Delete) {

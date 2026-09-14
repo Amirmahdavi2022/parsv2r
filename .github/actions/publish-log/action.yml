@@ -14,6 +14,8 @@ runs:
   using: composite
   steps:
     - shell: bash
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
       run: |
         set -euo pipefail
         LOG_FILE="ci-logs/${{ inputs.name }}-${GITHUB_SHA::8}.log"
@@ -35,14 +37,32 @@ runs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-        git fetch origin ci-logs --depth=1 2>/dev/null && git checkout ci-logs \
-          || git checkout --orphan ci-logs
-        git rm -rf --cached . >/dev/null 2>&1 || true
-        find . -maxdepth 1 ! -name . ! -name .git ! -name ci-logs -exec rm -rf {} + 2>/dev/null || true
+        # Two jobs can fail in the same run, so this races with itself. Keep whatever is
+        # already on the branch and retry on rejection rather than forcing, or the second
+        # job to finish quietly erases the first one's log -- which is the one worth reading.
+        for attempt in 1 2 3 4 5; do
+          rm -rf /tmp/logbranch
+          if git clone -q --depth 1 --branch ci-logs "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" /tmp/logbranch 2>/dev/null; then
+            :
+          else
+            mkdir -p /tmp/logbranch
+            git -C /tmp/logbranch init -q -b ci-logs
+            git -C /tmp/logbranch remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          fi
+          git -C /tmp/logbranch config user.name "github-actions[bot]"
+          git -C /tmp/logbranch config user.email "github-actions[bot]@users.noreply.github.com"
+          git -C /tmp/logbranch config http.extraheader "AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)"
 
-        mkdir -p ci-logs
-        cp /tmp/failure.log "$LOG_FILE"
-        git add "$LOG_FILE"
-        git commit -q -m "ci: ${{ inputs.name }} failed on ${GITHUB_SHA::8}"
-        git push -q origin ci-logs
-        echo "log pushed to the ci-logs branch as $LOG_FILE"
+          mkdir -p "/tmp/logbranch/$(dirname "$LOG_FILE")"
+          cp /tmp/failure.log "/tmp/logbranch/$LOG_FILE"
+          git -C /tmp/logbranch add "$LOG_FILE"
+          git -C /tmp/logbranch commit -q -m "ci: ${{ inputs.name }} failed on ${GITHUB_SHA::8}"
+          if git -C /tmp/logbranch push -q origin HEAD:ci-logs; then
+            echo "log pushed to the ci-logs branch as $LOG_FILE"
+            exit 0
+          fi
+          echo "push rejected, another job got there first; retrying ($attempt)"
+          sleep $((attempt * 3))
+        done
+        echo "could not publish the log" >&2
+        exit 1
