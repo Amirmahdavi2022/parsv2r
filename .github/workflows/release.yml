@@ -52,11 +52,21 @@ jobs:
           [ "$missing" -eq 0 ] || exit 1
 
       - name: Decode the signing key
-        if: env.ANDROID_KEYSTORE_BASE64 != ''
+        # No `if:` on a step env var here -- the condition is evaluated before the step's own env
+        # block exists, so it would always read empty and the key would never be decoded. The
+        # shell does the check instead, where the value actually is.
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         run: |
+          if [ -z "${ANDROID_KEYSTORE_BASE64:-}" ]; then
+            echo "No signing key is configured; the build will be unsigned." >&2
+            exit 0
+          fi
           echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          if [ ! -s "$RUNNER_TEMP/release.jks" ]; then
+            echo "The keystore secret did not decode to anything." >&2
+            exit 1
+          fi
           echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
 
       - name: Assemble release
@@ -90,6 +100,17 @@ jobs:
           done
           ( cd out && sha256sum *.apk > SHA256SUMS )
           ls -la out
+
+      - name: Every APK is signed
+        run: |
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
+          for apk in out/*.apk; do
+            if ! "$BT/apksigner" verify --print-certs "$apk" | grep -q "Signer #1"; then
+              echo "$apk is not signed" >&2
+              exit 1
+            fi
+            echo "signed: $(basename "$apk")"
+          done
 
       - uses: actions/upload-artifact@v4
         with:
