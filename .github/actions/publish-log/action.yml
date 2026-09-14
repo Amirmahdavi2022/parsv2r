@@ -1,0 +1,48 @@
+name: Publish a failing build log
+description: >
+  Pushes the tail of a failed build onto an orphan ci-logs branch.
+  Action logs are only reachable through a signed blob URL, which is not always available; a file
+  in the repository always is. Keeping the failure where it can be read is the difference between
+  fixing a build in one round trip and guessing at it for three.
+
+inputs:
+  name:
+    description: Short label for the job, used in the file name
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set -euo pipefail
+        LOG_FILE="ci-logs/${{ inputs.name }}-${GITHUB_SHA::8}.log"
+
+        {
+          echo "job:    ${{ inputs.name }}"
+          echo "commit: $GITHUB_SHA"
+          echo "run:    $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          echo "when:   $(date -u +%FT%TZ)"
+          echo
+          echo "---- last 400 lines ----"
+          tail -n 400 build-log.txt 2>/dev/null || echo "(nothing was captured)"
+          echo
+          echo "---- gradle test reports ----"
+          find . -name '*.txt' -path '*reports/tests*' -exec sh -c 'echo "== $1"; cat "$1"' _ {} \; 2>/dev/null | head -c 40000 || true
+          find . -name 'TEST-*.xml' -path '*test-results*' -exec sh -c 'echo "== $1"; cat "$1"' _ {} \; 2>/dev/null | head -c 60000 || true
+        } > /tmp/failure.log
+
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        git fetch origin ci-logs --depth=1 2>/dev/null && git checkout ci-logs \
+          || git checkout --orphan ci-logs
+        git rm -rf --cached . >/dev/null 2>&1 || true
+        find . -maxdepth 1 ! -name . ! -name .git ! -name ci-logs -exec rm -rf {} + 2>/dev/null || true
+
+        mkdir -p ci-logs
+        cp /tmp/failure.log "$LOG_FILE"
+        git add "$LOG_FILE"
+        git commit -q -m "ci: ${{ inputs.name }} failed on ${GITHUB_SHA::8}"
+        git push -q origin ci-logs
+        echo "log pushed to the ci-logs branch as $LOG_FILE"
