@@ -255,6 +255,18 @@ public final class CoreChecks {
         is("the tun's own subnet is kept off the tunnel", true, routingJson.contains("198.18.0.0/15"));
         is("ipv6 link local is kept off the tunnel", true, routingJson.contains("fe80::/10"));
 
+        // The LAN switch has to change the config, or it is a control that does nothing.
+        String withBypass = Json.write(XrayConfig.routing(true));
+        String withoutBypass = Json.write(XrayConfig.routing(false));
+        is("bypass on keeps the private rule", true, withBypass.contains("192.168.0.0/16"));
+        is("bypass off drops the private rule", false, withoutBypass.contains("192.168.0.0/16"));
+        is("bypass off still answers app dns", true, withoutBypass.contains("\"port\":\"53\""));
+        is("the two really differ", false, withBypass.equals(withoutBypass));
+        is("the built config honours the flag", false,
+                XrayConfig.build(c, "warning", false).contains("192.168.0.0/16"));
+        is("the default still bypasses", true,
+                XrayConfig.build(c, "warning").contains("192.168.0.0/16"));
+
         List<Object> outbounds = Json.arr(root.get("outbounds"));
         is("three outbounds", 3, outbounds.size());
         Map<String, Object> proxy = Json.obj(outbounds.get(0));

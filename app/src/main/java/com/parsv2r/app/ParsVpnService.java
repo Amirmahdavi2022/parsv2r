@@ -109,7 +109,7 @@ public final class ParsVpnService extends VpnService {
 
         String json;
         try {
-            json = store.buildXrayConfig(entry, Prefs.logLevel(this));
+            json = store.buildXrayConfig(entry, Prefs.logLevel(this), Prefs.bypassLan(this));
         } catch (JsonImport.InvalidConfigException e) {
             fail(e.getMessage());
             return;
@@ -131,7 +131,7 @@ public final class ParsVpnService extends VpnService {
         }
 
         try {
-            tun = establish(buildInterface());
+            tun = buildInterface().establish();
         } catch (Exception e) {
             Log.e(TAG, "the interface would not come up", e);
             fail(getString(R.string.error_interface));

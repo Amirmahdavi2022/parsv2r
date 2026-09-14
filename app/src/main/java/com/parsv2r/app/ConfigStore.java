@@ -134,7 +134,8 @@ final class ConfigStore {
     }
 
     /** Builds the Xray config for an entry. Throws if it cannot be used. */
-    String buildXrayConfig(SavedConfig entry, String logLevel) throws JsonImport.InvalidConfigException {
+    String buildXrayConfig(SavedConfig entry, String logLevel, boolean bypassLan)
+            throws JsonImport.InvalidConfigException {
         if (entry == null) throw new JsonImport.InvalidConfigException("nothing selected");
         if (entry.isJson()) {
             return JsonImport.normalise(entry.raw, logLevel).json;
@@ -148,7 +149,7 @@ final class ConfigStore {
         if (!com.parsv2r.core.XrayConfig.supports(c)) {
             throw new JsonImport.InvalidConfigException("unsupported protocol: " + c.protocol);
         }
-        return com.parsv2r.core.XrayConfig.build(c, logLevel);
+        return com.parsv2r.core.XrayConfig.build(c, logLevel, bypassLan);
     }
 
     Map<String, Object> debugSnapshot() {

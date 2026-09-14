@@ -82,7 +82,7 @@ header of every binary it produced so one built for the wrong CPU can't slip thr
 downloaded prebuilt.
 
 The `:core` module is plain Java with no Android in it at all, which is the point — the whole
-config layer runs on a desktop JVM, so its behaviour is known rather than hoped for. 158 checks,
+config layer runs on a desktop JVM, so its behaviour is known rather than hoped for. 164 checks,
 run by CI on every push:
 
 ```bash

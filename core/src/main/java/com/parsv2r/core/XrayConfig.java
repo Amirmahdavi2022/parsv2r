@@ -82,10 +82,19 @@ public final class XrayConfig {
     }
 
     public static String build(ProxyConfig c, String logLevel) {
-        return Json.writePretty(buildObject(c, logLevel));
+        return build(c, logLevel, true);
+    }
+
+    public static String build(ProxyConfig c, String logLevel, boolean bypassPrivate) {
+        return Json.writePretty(buildObject(c, logLevel, bypassPrivate));
     }
 
     public static Map<String, Object> buildObject(ProxyConfig c, String logLevel) {
+        return buildObject(c, logLevel, true);
+    }
+
+    public static Map<String, Object> buildObject(ProxyConfig c, String logLevel,
+                                                  boolean bypassPrivate) {
         if (!supports(c)) {
             throw new IllegalArgumentException("unsupported protocol: " + (c == null ? "null" : c.protocol));
         }
@@ -104,7 +113,7 @@ public final class XrayConfig {
         outbounds.add(simpleOutbound("blackhole", TAG_BLOCK));
         root.put("outbounds", outbounds);
 
-        root.put("routing", routing());
+        root.put("routing", routing(bypassPrivate));
         return root;
     }
 
@@ -165,6 +174,10 @@ public final class XrayConfig {
     }
 
     static Map<String, Object> routing() {
+        return routing(true);
+    }
+
+    static Map<String, Object> routing(boolean bypassPrivate) {
         Map<String, Object> routing = Json.newObject();
         routing.put("domainStrategy", "AsIs");
         List<Object> rules = Json.newArray();
@@ -195,13 +208,15 @@ public final class XrayConfig {
         // needs geoip.dat shipped alongside the core and copied out of the APK at first run, and
         // a routing rule that silently depends on a data file is a routing rule that fails on the
         // one device where the copy did not happen. Four megabytes saved, one moving part removed.
-        Map<String, Object> privateRule = Json.newObject();
-        privateRule.put("type", "field");
-        List<Object> ips = Json.newArray();
-        for (String cidr : PRIVATE_RANGES) ips.add(cidr);
-        privateRule.put("ip", ips);
-        privateRule.put("outboundTag", TAG_DIRECT);
-        rules.add(privateRule);
+        if (bypassPrivate) {
+            Map<String, Object> privateRule = Json.newObject();
+            privateRule.put("type", "field");
+            List<Object> ips = Json.newArray();
+            for (String cidr : PRIVATE_RANGES) ips.add(cidr);
+            privateRule.put("ip", ips);
+            privateRule.put("outboundTag", TAG_DIRECT);
+            rules.add(privateRule);
+        }
 
         routing.put("rules", rules);
         return routing;
