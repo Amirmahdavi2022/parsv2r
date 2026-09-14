@@ -1,0 +1,408 @@
+job:    fork
+commit: d6025a751357da2c2aae04b0f14a4bc803091889
+run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/34907085472
+when:   2026-09-14T23:05:03Z
+
+---- last 400 lines ----
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:crash:32.3.2
+      > Could not resolve org.apache.httpcomponents:httpmime:4.5.6.
+         > Could not parse POM https://plugins.gradle.org/m2/org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6.pom
+            > Could not find org.apache.httpcomponents:httpcomponents-client:4.5.6.
+              Searched in the following locations:
+                - https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcomponents-client/4.5.6/httpcomponents-client-4.5.6.pom
+                - https://plugins.gradle.org/m2/org/apache/httpcomponents/httpcomponents-client/4.5.6/httpcomponents-client-4.5.6.pom
+   > Could not find commons-io:commons-io:2.16.1.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/commons-io/commons-io/2.16.1/commons-io-2.16.1.pom
+       - https://plugins.gradle.org/m2/commons-io/commons-io/2.16.1/commons-io-2.16.1.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > androidx.databinding:databinding-compiler-common:9.3.2
+   > Could not find org.ow2.asm:asm:9.9.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.9/asm-9.9.pom
+       - https://plugins.gradle.org/m2/org/ow2/asm/asm/9.9/asm-9.9.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.lint:lint-typedef-remover:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:gradle-api:9.3.2
+   > Could not resolve org.ow2.asm:asm-analysis:9.9.
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+      > Could not resolve org.ow2.asm:asm-analysis:9.9.
+         > Could not parse POM https://plugins.gradle.org/m2/org/ow2/asm/asm-analysis/9.9/asm-analysis-9.9.pom
+            > Could not find org.ow2:ow2:1.5.1.
+              Searched in the following locations:
+                - https://repo.maven.apache.org/maven2/org/ow2/ow2/1.5.1/ow2-1.5.1.pom
+                - https://plugins.gradle.org/m2/org/ow2/ow2/1.5.1/ow2-1.5.1.pom
+   > Could not find org.ow2.asm:asm-commons:9.9.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.9/asm-commons-9.9.pom
+       - https://plugins.gradle.org/m2/org/ow2/asm/asm-commons/9.9/asm-commons-9.9.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2
+   > Could not find org.ow2.asm:asm-util:9.9.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/ow2/asm/asm-util/9.9/asm-util-9.9.pom
+       - https://plugins.gradle.org/m2/org/ow2/asm/asm-util/9.9/asm-util-9.9.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+   > Could not find org.glassfish.jaxb:jaxb-runtime:2.3.2.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-runtime/2.3.2/jaxb-runtime-2.3.2.pom
+       - https://plugins.gradle.org/m2/org/glassfish/jaxb/jaxb-runtime/2.3.2/jaxb-runtime-2.3.2.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdklib:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:repository:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > androidx.databinding:databinding-compiler-common:9.3.2
+   > Could not find net.sf.jopt-simple:jopt-simple:4.9.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.pom
+       - https://plugins.gradle.org/m2/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+   > Could not find com.squareup:javapoet:1.13.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/com/squareup/javapoet/1.13.0/javapoet-1.13.0.pom
+       - https://plugins.gradle.org/m2/com/squareup/javapoet/1.13.0/javapoet-1.13.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > androidx.databinding:databinding-compiler-common:9.3.2
+   > Could not find com.google.protobuf:protobuf-java:3.25.5.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.pom
+       - https://repo.maven.apache.org/maven2/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.pom
+       - https://plugins.gradle.org/m2/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.ddms:ddmlib:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:aapt2-proto:9.3.2-15703166
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:aaptcompiler:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:shared:32.3.2 > com.android.tools.analytics-library:protos:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2 > com.android.tools.analytics-library:tracker:32.3.2
+   > Could not find com.google.protobuf:protobuf-java-util:3.25.5.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.pom
+       - https://repo.maven.apache.org/maven2/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.pom
+       - https://plugins.gradle.org/m2/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+   > Could not find com.google.code.gson:gson:2.11.0.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0.pom
+       - https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0.pom
+       - https://plugins.gradle.org/m2/com/google/code/gson/gson/2.11.0/gson-2.11.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdklib:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:shared:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > androidx.databinding:databinding-compiler-common:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2 > com.android.tools.build:manifest-merger:32.3.2
+   > Could not find com.google.crypto.tink:tink:1.7.0.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/crypto/tink/tink/1.7.0/tink-1.7.0.pom
+       - https://repo.maven.apache.org/maven2/com/google/crypto/tink/tink/1.7.0/tink-1.7.0.pom
+       - https://plugins.gradle.org/m2/com/google/crypto/tink/tink/1.7.0/tink-1.7.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+   > Could not find org.tensorflow:tensorflow-lite-metadata:0.2.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/tensorflow/tensorflow-lite-metadata/0.2.0/tensorflow-lite-metadata-0.2.0.pom
+       - https://plugins.gradle.org/m2/org/tensorflow/tensorflow-lite-metadata/0.2.0/tensorflow-lite-metadata-0.2.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2
+   > Could not find org.jetbrains.kotlin:kotlin-gradle-plugin-api:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/2.4.10/kotlin-gradle-plugin-api-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/2.4.10/kotlin-gradle-plugin-api-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:2.4.10 > org.jetbrains.kotlin:compose-compiler-gradle-plugin:2.4.10
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugins-bom:2.4.10
+   > Could not find org.jetbrains.kotlin:fus-statistics-gradle-plugin:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/fus-statistics-gradle-plugin/2.4.10/fus-statistics-gradle-plugin-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/fus-statistics-gradle-plugin/2.4.10/fus-statistics-gradle-plugin-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugins-bom:2.4.10
+   > Could not find org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/2.4.10/kotlin-gradle-plugin-idea-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/2.4.10/kotlin-gradle-plugin-idea-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10
+   > Could not find org.jetbrains.kotlin:kotlin-gradle-plugin-idea-proto:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea-proto/2.4.10/kotlin-gradle-plugin-idea-proto-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea-proto/2.4.10/kotlin-gradle-plugin-idea-proto-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10
+   > Could not find org.jetbrains.kotlin:kotlin-build-statistics:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-build-statistics/2.4.10/kotlin-build-statistics-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-build-statistics/2.4.10/kotlin-build-statistics-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10
+   > Could not find org.jetbrains.kotlin:kotlin-util-klib-metadata:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-util-klib-metadata/2.4.10/kotlin-util-klib-metadata-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-util-klib-metadata/2.4.10/kotlin-util-klib-metadata-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10
+   > Could not find org.jetbrains.kotlin:kotlin-compiler-runner:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-compiler-runner/2.4.10/kotlin-compiler-runner-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-compiler-runner/2.4.10/kotlin-compiler-runner-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10
+   > Could not find org.jetbrains:annotations:13.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/annotations/13.0/annotations-13.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin:kotlin-stdlib:2.3.20
+   > Could not find com.google.guava:guava:33.4.0-jre.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+       - https://repo.maven.apache.org/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+       - https://plugins.gradle.org/m2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:crash:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:shared:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.lint:lint-typedef-remover:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > androidx.databinding:databinding-compiler-common:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2 > com.android.tools:common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2 > com.android.tools.analytics-library:tracker:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2 > com.android.tools.build:apkzlib:9.3.2
+   > Could not find javax.inject:javax.inject:1.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/javax/inject/javax.inject/1/javax.inject-1.pom
+       - https://plugins.gradle.org/m2/javax/inject/javax.inject/1/javax.inject-1.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2
+   > Could not find net.sf.kxml:kxml2:2.3.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/net/sf/kxml/kxml2/2.3.0/kxml2-2.3.0.pom
+       - https://plugins.gradle.org/m2/net/sf/kxml/kxml2/2.3.0/kxml2-2.3.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.ddms:ddmlib:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.lint:lint-model:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.layoutlib:layoutlib-api:32.3.2
+   > Could not find org.apache.commons:commons-compress:1.27.1.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.27.1/commons-compress-1.27.1.pom
+       - https://plugins.gradle.org/m2/org/apache/commons/commons-compress/1.27.1/commons-compress-1.27.1.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdklib:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:repository:32.3.2
+   > Could not find org.bouncycastle:bcpkix-jdk18on:1.79.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/bouncycastle/bcpkix-jdk18on/1.79/bcpkix-jdk18on-1.79.pom
+       - https://plugins.gradle.org/m2/org/bouncycastle/bcpkix-jdk18on/1.79/bcpkix-jdk18on-1.79.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2 > com.android.tools.build:apkzlib:9.3.2
+   > Could not find org.jetbrains.kotlin:kotlin-reflect:2.3.20.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-reflect/2.3.20/kotlin-reflect-2.3.20.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-reflect/2.3.20/kotlin-reflect-2.3.20.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2
+   > Could not find org.apache.httpcomponents:httpcore:4.4.16.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.pom
+       - https://plugins.gradle.org/m2/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdklib:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:crash:32.3.2
+   > Could not find com.google.jimfs:jimfs:1.1.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/jimfs/jimfs/1.1/jimfs-1.1.pom
+       - https://repo.maven.apache.org/maven2/com/google/jimfs/jimfs/1.1/jimfs-1.1.pom
+       - https://plugins.gradle.org/m2/com/google/jimfs/jimfs/1.1/jimfs-1.1.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:repository:32.3.2
+   > Could not find org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0/kotlinx-coroutines-core-1.9.0.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0/kotlinx-coroutines-core-1.9.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:repository:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:shared:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2 > com.android.tools.analytics-library:tracker:32.3.2
+   > Could not find org.jetbrains:annotations:13.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/annotations/13.0/annotations-13.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.ddms:ddmlib:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.layoutlib:layoutlib-api:32.3.2
+   > Could not find com.google.guava:guava:33.4.0-jre.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+       - https://repo.maven.apache.org/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+       - https://plugins.gradle.org/m2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:aaptcompiler:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder-test-api:9.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:gradle-api:9.3.2
+   > Could not find org.apache.httpcomponents:httpclient:4.5.14.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.pom
+       - https://plugins.gradle.org/m2/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:crash:32.3.2
+   > Could not find net.java.dev.jna:jna-platform:5.6.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/net/java/dev/jna/jna-platform/5.6.0/jna-platform-5.6.0.pom
+       - https://plugins.gradle.org/m2/net/java/dev/jna/jna-platform/5.6.0/jna-platform-5.6.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.analytics-library:shared:32.3.2
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools:sdk-common:32.3.2 > com.android.tools:common:32.3.2
+   > Could not find com.googlecode.juniversalchardet:juniversalchardet:1.0.3.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/googlecode/juniversalchardet/juniversalchardet/1.0.3/juniversalchardet-1.0.3.pom
+       - https://repo.maven.apache.org/maven2/com/googlecode/juniversalchardet/juniversalchardet/1.0.3/juniversalchardet-1.0.3.pom
+       - https://plugins.gradle.org/m2/com/googlecode/juniversalchardet/juniversalchardet/1.0.3/juniversalchardet-1.0.3.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > androidx.databinding:databinding-compiler-common:9.3.2
+   > Could not resolve com.google.auto.value:auto-value-annotations:1.6.2.
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+      > Could not resolve com.google.auto.value:auto-value-annotations:1.6.2.
+         > Could not parse POM https://plugins.gradle.org/m2/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.pom
+            > Could not find com.google.auto.value:auto-value-parent:1.6.2.
+              Searched in the following locations:
+                - https://dl.google.com/dl/android/maven2/com/google/auto/value/auto-value-parent/1.6.2/auto-value-parent-1.6.2.pom
+                - https://repo.maven.apache.org/maven2/com/google/auto/value/auto-value-parent/1.6.2/auto-value-parent-1.6.2.pom
+                - https://plugins.gradle.org/m2/com/google/auto/value/auto-value-parent/1.6.2/auto-value-parent-1.6.2.pom
+   > Could not find com.google.errorprone:error_prone_annotations:2.3.1.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/errorprone/error_prone_annotations/2.3.1/error_prone_annotations-2.3.1.pom
+       - https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.3.1/error_prone_annotations-2.3.1.pom
+       - https://plugins.gradle.org/m2/com/google/errorprone/error_prone_annotations/2.3.1/error_prone_annotations-2.3.1.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+   > Could not find com.google.guava:guava:33.4.0-jre.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+       - https://repo.maven.apache.org/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+       - https://plugins.gradle.org/m2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+   > Could not find com.google.protobuf:protobuf-java:3.25.5.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.pom
+       - https://repo.maven.apache.org/maven2/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.pom
+       - https://plugins.gradle.org/m2/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+   > Could not find com.google.protobuf:protobuf-java-util:3.25.5.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.pom
+       - https://repo.maven.apache.org/maven2/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.pom
+       - https://plugins.gradle.org/m2/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+   > Could not find com.google.dagger:dagger:2.28.3.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/dagger/dagger/2.28.3/dagger-2.28.3.pom
+       - https://repo.maven.apache.org/maven2/com/google/dagger/dagger/2.28.3/dagger-2.28.3.pom
+       - https://plugins.gradle.org/m2/com/google/dagger/dagger/2.28.3/dagger-2.28.3.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+   > Could not find org.bitbucket.b_c:jose4j:0.9.5.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/bitbucket/b_c/jose4j/0.9.5/jose4j-0.9.5.pom
+       - https://plugins.gradle.org/m2/org/bitbucket/b_c/jose4j/0.9.5/jose4j-0.9.5.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+   > Could not resolve org.slf4j:slf4j-api:1.7.30.
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:bundletool:1.18.3
+      > Could not resolve org.slf4j:slf4j-api:1.7.30.
+         > Could not parse POM https://plugins.gradle.org/m2/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.pom
+            > Could not find org.slf4j:slf4j-parent:1.7.30.
+              Searched in the following locations:
+                - https://repo.maven.apache.org/maven2/org/slf4j/slf4j-parent/1.7.30/slf4j-parent-1.7.30.pom
+                - https://plugins.gradle.org/m2/org/slf4j/slf4j-parent/1.7.30/slf4j-parent-1.7.30.pom
+   > Could not find com.google.code.gson:gson:2.11.0.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0.pom
+       - https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0.pom
+       - https://plugins.gradle.org/m2/com/google/code/gson/gson/2.11.0/gson-2.11.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build.jetifier:jetifier-core:1.0.0-beta10
+   > Could not find org.ow2.asm:asm:9.9.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.9/asm-9.9.pom
+       - https://plugins.gradle.org/m2/org/ow2/asm/asm/9.9/asm-9.9.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta10
+   > Could not find org.ow2.asm:asm-util:9.9.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/ow2/asm/asm-util/9.9/asm-util-9.9.pom
+       - https://plugins.gradle.org/m2/org/ow2/asm/asm-util/9.9/asm-util-9.9.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta10
+   > Could not find org.ow2.asm:asm-commons:9.9.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.9/asm-commons-9.9.pom
+       - https://plugins.gradle.org/m2/org/ow2/asm/asm-commons/9.9/asm-commons-9.9.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta10
+   > Could not find org.jdom:jdom2:2.0.6.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jdom/jdom2/2.0.6/jdom2-2.0.6.pom
+       - https://plugins.gradle.org/m2/org/jdom/jdom2/2.0.6/jdom2-2.0.6.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta10
+   > Could not find com.squareup:javawriter:2.5.0.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom
+       - https://plugins.gradle.org/m2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2
+   > Could not find org.jetbrains.kotlin:kotlin-gradle-plugin-api:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/2.4.10/kotlin-gradle-plugin-api-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/2.4.10/kotlin-gradle-plugin-api-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:gradle-api:9.3.2
+   > Could not find org.jetbrains.kotlin:kotlin-native-utils:2.4.10.
+     Searched in the following locations:
+       - https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-native-utils/2.4.10/kotlin-native-utils-2.4.10.pom
+       - https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-native-utils/2.4.10/kotlin-native-utils-2.4.10.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugins-bom:2.4.10
+         buildscript of root project 'v2rayNG' > org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.4.10 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10 > org.jetbrains.kotlin:kotlin-klib-commonizer-api:2.4.10
+   > Could not find com.google.code.findbugs:jsr305:3.0.2.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom
+       - https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom
+       - https://plugins.gradle.org/m2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom
+     Required by:
+         buildscript of root project 'v2rayNG' > com.android.application:com.android.application.gradle.plugin:9.3.2 > com.android.tools.build:gradle:9.3.2 > com.android.tools.build:builder:9.3.2 > com.android.tools.build:apkzlib:9.3.2
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 33s
+
+---- gradle test reports ----
