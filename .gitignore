@@ -67,3 +67,7 @@ V2rayNG/app/google-services.json
 # Ignore OS-specific files
 Thumbs.db
 .DS_Store
+
+# The Gradle wrapper jar is matched by *.jar above, and without it CI cannot run gradle
+# at all (ClassNotFoundException: GradleWrapperMain). Keep it.
+!V2rayNG/gradle/wrapper/gradle-wrapper.jar
