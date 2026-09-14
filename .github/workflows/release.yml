@@ -103,14 +103,24 @@ jobs:
 
       - name: Every APK is signed
         run: |
-          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
-          for apk in out/*.apk; do
-            if ! "$BT/apksigner" verify --print-certs "$apk" | grep -q "Signer #1"; then
-              echo "$apk is not signed" >&2
+          set -o pipefail
+          {
+            echo "ANDROID_HOME=${ANDROID_HOME:-unset}"
+            echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT:-unset}"
+            SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+            APKSIGNER="$(find "$SDK" -name apksigner -type f 2>/dev/null | sort -V | tail -1)"
+            echo "apksigner=${APKSIGNER:-not found}"
+            if [ -z "$APKSIGNER" ]; then
+              echo "no apksigner in the SDK, so signing cannot be verified" >&2
               exit 1
             fi
-            echo "signed: $(basename "$apk")"
-          done
+            fail=0
+            for apk in out/*.apk; do
+              echo "---- $(basename "$apk")"
+              "$APKSIGNER" verify --verbose --print-certs "$apk" || fail=1
+            done
+            [ "$fail" -eq 0 ] || { echo "at least one APK did not verify" >&2; exit 1; }
+          } 2>&1 | tee build-log.txt
 
       - uses: actions/upload-artifact@v4
         with:
