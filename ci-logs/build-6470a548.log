@@ -1,12 +1,12 @@
-job:    core
+job:    build
 commit: 6470a54859d16b9a09d95c9962edf971e9c36831
 run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/34896764012
-when:   2026-09-14T21:05:33Z
+when:   2026-09-14T21:08:12Z
 
 ---- last 400 lines ----
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1789419932059.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1789420090683.json
 
 FAILURE: Build failed with an exception.
 
@@ -191,6 +191,6 @@ Caused by: org.gradle.plugin.management.internal.InvalidPluginRequestException: 
 	... 157 more
 
 
-BUILD FAILED in 7s
+BUILD FAILED in 6s
 
 ---- gradle test reports ----
