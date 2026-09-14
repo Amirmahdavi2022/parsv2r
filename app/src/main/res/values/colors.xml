@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Taken from the brand mark: gold on near-black. -->
+    <color name="gold">#F5B841</color>
+    <color name="gold_deep">#C8891F</color>
+    <color name="ink">#0B0B0D</color>
+    <color name="surface">#15161A</color>
+    <color name="surface_high">#1E2026</color>
+    <color name="outline">#2E313A</color>
+    <color name="cream">#F2EDE4</color>
+    <color name="muted">#9AA0AC</color>
+    <color name="ok">#4ADE80</color>
+    <color name="warn">#FBBF24</color>
+    <color name="bad">#F87171</color>
+    <color name="ic_launcher_background">#0B0B0D</color>
+</resources>

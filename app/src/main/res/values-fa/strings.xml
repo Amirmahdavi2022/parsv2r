@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ParsV2R</string>
+
+    <string name="state_idle">وصل نیست</string>
+    <string name="state_connecting">در حال اتصال…</string>
+    <string name="state_connected">وصل شد</string>
+    <string name="state_connected_to">وصل شد · %1$s</string>
+    <string name="state_error">اتصال برقرار نشد</string>
+
+    <string name="action_connect">اتصال</string>
+    <string name="action_disconnect">قطع</string>
+    <string name="action_cancel">لغو</string>
+    <string name="action_add">افزودن کانفیگ</string>
+    <string name="action_remove">حذف</string>
+    <string name="action_paste">چسباندن</string>
+    <string name="action_save">ذخیره</string>
+
+    <string name="no_server">سروری انتخاب نشده</string>
+    <string name="servers_title">سرورها</string>
+    <string name="empty_hint">هنوز چیزی اینجا نیست. یک لینک vless، vmess، trojan یا shadowsocks، یک ساب‌اسکریپشن، یا یک کانفیگ کامل JSON اضافه کنید.</string>
+    <string name="confirm_remove">این سرور از لیست حذف شود؟</string>
+
+    <string name="traffic_idle">↑ ۰ B   ↓ ۰ B</string>
+    <string name="traffic_format">↑ %1$s   ↓ %2$s</string>
+
+    <string name="title_add">افزودن کانفیگ</string>
+    <string name="title_settings">تنظیمات</string>
+    <string name="input_hint">لینک، ساب‌اسکریپشن یا کانفیگ JSON را بچسبانید</string>
+    <string name="input_help">یک لینک یا چند لینک، بدنه base64 یک ساب‌اسکریپشن، یا یک کانفیگ کامل JSON. هرکدام که باشد خودش تشخیص داده می‌شود.</string>
+
+    <plurals name="added_configs">
+        <item quantity="one">%d کانفیگ اضافه شد</item>
+        <item quantity="other">%d کانفیگ اضافه شد</item>
+    </plurals>
+
+    <string name="error_no_config">اول یک کانفیگ اضافه کنید</string>
+    <string name="error_permission">اجازه VPN داده نشد</string>
+    <string name="error_interface">رابط VPN بالا نیامد</string>
+    <string name="error_bridge">پل تونل شروع نشد</string>
+    <string name="error_write_config">نوشتن فایل کانفیگ ممکن نشد</string>
+    <string name="error_clipboard_empty">کلیپ‌بورد خالی است</string>
+    <string name="error_already_saved">این یکی از قبل در لیست هست</string>
+    <string name="error_bad_config">این کانفیگ قابل استفاده نیست: %1$s</string>
+    <string name="error_disconnect_first">قبل از تعویض سرور، اتصال را قطع کنید</string>
+
+    <string name="setting_language">زبان</string>
+    <string name="setting_log_level">سطح لاگ هسته</string>
+    <string name="setting_bypass_lan">ترافیک شبکه محلی از تونل رد نشود</string>
+    <string name="setting_version">نسخه</string>
+    <string name="language_system">پیش‌فرض سیستم</string>
+    <string name="language_english">English</string>
+    <string name="language_persian">فارسی</string>
+
+    <string name="channel_tunnel">تونل</string>
+
+    <string name="title_about">درباره</string>
+    <string name="about_made_by">ساخته JMC</string>
+    <string name="about_channel_label">کانال تلگرام</string>
+    <string name="about_channel_handle">\@parsv2r</string>
+    <string name="about_channel_url">https://t.me/parsv2r</string>
+    <string name="about_blurb">آپدیت‌ها، کانفیگ‌های سالم و حرف راست درباره اینکه الان چی رد می‌شود و چی نمی‌شود، توی کانال گذاشته می‌شود.</string>
+    <string name="about_privacy">هیچ داده‌ای از دستگاه شما خارج نمی‌شود. نه آنالیتیکس، نه حساب کاربری، نه لیست سروری که از جایی گرفته شود.</string>
+    <string name="about_licence">GPL-3.0</string>
+</resources>

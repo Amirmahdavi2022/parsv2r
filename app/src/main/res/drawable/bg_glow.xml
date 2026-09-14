@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A soft gold wash behind the connect button, so the screen has a centre. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="55%p"
+        android:startColor="#33F5B841"
+        android:centerColor="#12F5B841"
+        android:endColor="#00F5B841" />
+</shape>

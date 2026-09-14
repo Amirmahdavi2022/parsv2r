@@ -1,0 +1,24 @@
+// A plain Java library on purpose.
+//
+// Nothing in here may touch Android. That is what lets the whole configuration layer be compiled
+// and run on a desktop JVM, which is the only reason its behaviour is actually known rather than
+// assumed. If something here needs a Context, it belongs in :app instead.
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}
+
+tasks.withType(Test).configureEach {
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+}
