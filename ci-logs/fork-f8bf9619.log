@@ -1,0 +1,10 @@
+job:    fork
+commit: f8bf9619ce2bd510bb94d020f62051eb16ed06d3
+run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/34903350564
+when:   2026-09-14T22:17:57Z
+
+---- last 400 lines ----
+Error: Could not find or load main class org.gradle.wrapper.GradleWrapperMain
+Caused by: java.lang.ClassNotFoundException: org.gradle.wrapper.GradleWrapperMain
+
+---- gradle test reports ----
