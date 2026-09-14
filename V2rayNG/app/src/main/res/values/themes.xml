@@ -1,0 +1,31 @@
+<resources>
+    <color name="window_background_light">#FFFFFFFF</color>
+    <color name="window_background_dark">#FF0B0B0D</color>
+
+    <!-- Brand palette, taken from the app mark. -->
+    <color name="parsv2r_gold">#FFF5B841</color>
+    <color name="parsv2r_gold_deep">#FFC8891F</color>
+    <color name="parsv2r_ink">#FF0B0B0D</color>
+    <color name="parsv2r_surface">#FF15161A</color>
+    <color name="parsv2r_cream">#FFF2EDE4</color>
+
+    <style name="AppThemeBase" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowBackground">@color/window_background_light</item>
+        <item name="colorAccent">@color/parsv2r_gold_deep</item>
+        <item name="colorPrimary">@color/parsv2r_gold_deep</item>
+        <item name="colorPrimaryDark">@color/parsv2r_ink</item>
+    </style>
+
+    <style name="AppThemeDayNight" parent="AppThemeBase" />
+
+    <style name="AppThemeDayNight.NoActionBar" parent="AppThemeBase" />
+
+    <style name="AppThemeDayNight.NoActionBar.Translucent" parent="AppThemeBase">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>
