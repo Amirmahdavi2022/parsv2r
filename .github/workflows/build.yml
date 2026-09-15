@@ -26,6 +26,17 @@ jobs:
         submodules: 'recursive'
         fetch-depth: '0'
 
+    # Compose's painterResource only draws vectors and bitmaps. A launcher mipmap resolves to
+    # the adaptive-icon xml on Android 8+ and throws at runtime, which the build never sees.
+    # v2.3.8-pars2 shipped exactly that and crashed on launch.
+    - name: Refuse painterResource on launcher mipmaps
+      run: |
+        if grep -rn 'painterResource(R\.mipmap\.' V2rayNG/app/src; then
+          echo "painterResource cannot draw an adaptive icon, use a raster in res/drawable-nodpi"
+          exit 1
+        fi
+        echo "ok"
+
     - name: Setup Android SDK
       uses: android-actions/setup-android@v4
       with:

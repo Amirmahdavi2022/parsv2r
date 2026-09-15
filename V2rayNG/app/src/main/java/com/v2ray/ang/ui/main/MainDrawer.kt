@@ -88,8 +88,13 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                     // No tint here, deliberately. Upstream painted the icon solid white in dark
                     // mode, which works for a single-colour glyph and turns a full-colour mark
                     // into a white disc. This one is drawn as it is.
+                    //
+                    // It must be a plain raster. R.mipmap.ic_launcher resolves to the
+                    // adaptive-icon xml on Android 8+, painterResource only takes vectors and
+                    // bitmaps, and the drawer is composed at launch, so that one line killed
+                    // the app before the first frame.
                     Image(
-                        painter = painterResource(R.mipmap.ic_launcher),
+                        painter = painterResource(R.drawable.brand_mark),
                         contentDescription = null,
                         modifier = Modifier.size(112.dp)
                     )
