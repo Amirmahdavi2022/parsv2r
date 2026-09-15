@@ -1,6 +1,7 @@
 package com.v2ray.ang.ui.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -49,7 +51,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.v2ray.ang.R
 import com.v2ray.ang.dto.LocateTarget
 import com.v2ray.ang.dto.entities.ProfileItem
-import com.v2ray.ang.ui.compose.ItemDivider
 import com.v2ray.ang.ui.compose.ReorderableGridItem
 import com.v2ray.ang.ui.compose.ReorderableListItem
 import com.v2ray.ang.ui.compose.colorConfigType
@@ -218,7 +219,6 @@ private fun ServerListPage(
                                 actions = actions
                             )
                         }
-                        ItemDivider()
                     }
                 } else {
                     ServerItemRow(
@@ -226,7 +226,6 @@ private fun ServerListPage(
                         isSelected = row.guid == selectedGuid,
                         actions = actions
                     )
-                    ItemDivider()
                 }
             }
         }
@@ -271,12 +270,14 @@ private fun ServerItemRow(
     isSelected: Boolean,
     actions: ServerRowActions
 ) {
-    ServerListItem(
-        row = row,
-        isSelected = isSelected,
-        doubleColumnDisplay = false,
-        actions = actions
-    )
+    ServerCard(isSelected = isSelected) {
+        ServerListItem(
+            row = row,
+            isSelected = isSelected,
+            doubleColumnDisplay = false,
+            actions = actions
+        )
+    }
 }
 
 @Composable
@@ -286,14 +287,34 @@ private fun ServerItemColumn(
     doubleColumnDisplay: Boolean,
     actions: ServerRowActions
 ) {
-    Column {
+    ServerCard(isSelected = isSelected) {
         ServerListItem(
             row = row,
             isSelected = isSelected,
             doubleColumnDisplay = doubleColumnDisplay,
             actions = actions
         )
-        ItemDivider()
+    }
+}
+
+// Each server sits on its own rounded card; the selected one is tinted and outlined in the
+// accent colour instead of relying on the thin side bar alone.
+@Composable
+private fun ServerCard(isSelected: Boolean, content: @Composable () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    val shape = RoundedCornerShape(16.dp)
+    Box(
+        Modifier
+            .padding(horizontal = 12.dp, vertical = 5.dp)
+            .clip(shape)
+            .background(if (isSelected) scheme.primary.copy(alpha = 0.10f) else scheme.surfaceContainerLow)
+            .border(
+                width = 1.dp,
+                color = if (isSelected) scheme.primary.copy(alpha = 0.55f) else scheme.outlineVariant.copy(alpha = 0.6f),
+                shape = shape
+            )
+    ) {
+        content()
     }
 }
 
