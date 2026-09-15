@@ -41,6 +41,7 @@ data class ProfileItem(
     var sni: String? = null,
     var alpn: String? = null,
     var fingerPrint: String? = null,
+    var cipherSuites: String? = null,
     var insecure: Boolean? = null,
     var echConfigList: String? = null,
     var verifyPeerCertByName: String? = null,
@@ -73,6 +74,19 @@ data class ProfileItem(
     var proxyChainProfiles: String? = null,
 
     var browserDialerMode: String? = null,
+
+    var dialMode: String? = null,
+
+    var aetherProtocol: String? = null,
+    var aetherTransport: String? = null,
+    var aetherScanMode: String? = null,
+    var aetherObfuscation: String? = null,
+    var aetherIpVersion: String? = null,
+    var aetherWiwOuter: String? = null,
+    var aetherWiwInner: String? = null,
+    var aetherFragment: Boolean? = null,
+    var aetherFragmentSize: String? = null,
+    var aetherFragmentDelay: String? = null,
 ) {
 
     companion object {

@@ -130,6 +130,7 @@ object AppConfig {
     const val APP_URL = "$GITHUB_URL/Amirmahdavi2022/parsv2r"
     const val APP_API_URL = "https://api.github.com/repos/Amirmahdavi2022/parsv2r/releases"
     const val APP_ISSUES_URL = "$APP_URL/issues"
+    const val AETHER_URL = "$GITHUB_URL/CluvexStudio/aether"
     const val APP_WIKI_MODE = "$APP_URL/wiki/Mode"
     const val APP_PRIVACY_POLICY = "$GITHUB_RAW_URL/Amirmahdavi2022/parsv2r/main/PRIVACY.md"
     const val APP_PROMOTION_URL = "aHR0cHM6Ly85LjIzNDQ1Ni54eXovYWJjLmh0bWw="
@@ -146,9 +147,9 @@ object AppConfig {
     const val IP_API_URL = "https://api.ip.sb/geoip"
 
     /** DNS server addresses. */
-    const val DNS_PROXY = "https://cloudflare-dns.com/dns-query"
-    const val DNS_DIRECT = "223.5.5.5"
-    const val DNS_VPN = "1.1.1.1"
+    const val DNS_PROXY = "https://dns.google/dns-query"
+    const val DNS_DIRECT = "localhost"
+    const val DNS_VPN = "8.8.8.8"
     const val GEOSITE_PRIVATE = "geosite:private"
     const val GEOSITE_CN = "geosite:cn"
     const val GEOIP_PRIVATE = "geoip:private"
@@ -163,6 +164,7 @@ object AppConfig {
     /** Ports and addresses for various services. */
     const val PORT_LOCAL_DNS = "10853"
     const val PORT_SOCKS = "10808"
+    const val PORT_AETHER_SOCKS = "10819"
     const val WIREGUARD_LOCAL_ADDRESS_V4 = "172.16.0.2/32"
     const val WIREGUARD_LOCAL_ADDRESS_V6 = "2606:4700:110:8f81:d551:a0:532e:a2b3/128"
     const val WIREGUARD_LOCAL_MTU = "1420"
@@ -170,7 +172,7 @@ object AppConfig {
 
     /** Shared defaults for settings shown in the UI and consumed by config generation. */
     const val DEFAULT_SOCKS_ENABLE_UDP = true
-    const val DEFAULT_OUTBOUND_DOMAIN_RESOLVE_METHOD = "1"
+    const val DEFAULT_OUTBOUND_DOMAIN_RESOLVE_METHOD = "0"
     const val DEFAULT_VPN_BYPASS_LAN = "1"
     const val DEFAULT_HEV_TUNNEL_LOGLEVEL = "warn"
     const val DEFAULT_MUX_XUDP_CONCURRENCY = "8"
@@ -183,6 +185,9 @@ object AppConfig {
     const val MSG_STATE_START = 3
     const val MSG_STATE_START_SUCCESS = 31
     const val MSG_STATE_START_FAILURE = 32
+
+    /** The service is up but the selected profile cannot carry traffic yet; content is the localized reason. */
+    const val MSG_STATE_CONNECTING = 33
     const val MSG_STATE_STOP = 4
     const val MSG_STATE_STOP_SUCCESS = 41
     const val MSG_STATE_RESTART = 5
@@ -219,6 +224,7 @@ object AppConfig {
     const val HYSTERIA2 = "hysteria2://"
     const val HY2 = "hy2://"
     const val V2RAYNFMTS = "v2rayn://"
+    const val AETHER = "aether://"
 
     /** Give a good name to this, IDK*/
     const val VPN = "VPN"
@@ -271,7 +277,6 @@ object AppConfig {
 
     const val DEFAULT_PORT = 443
     const val DEFAULT_SECURITY = "auto"
-    const val DEFAULT_LEVEL = 8
     const val DEFAULT_NETWORK = "tcp"
     const val TLS = "tls"
     const val REALITY = "reality"
@@ -340,9 +345,9 @@ object AppConfig {
     )
 
     val GEO_FILES_SOURCES = arrayListOf(
+        "Chocolate4U/Iran-v2ray-rules",
         "Loyalsoldier/v2ray-rules-dat",
-        "runetfreedom/russia-v2ray-rules-dat",
-        "Chocolate4U/Iran-v2ray-rules"
+        "runetfreedom/russia-v2ray-rules-dat"
     )
 
     val BUILTIN_OUTBOUND_TAGS = setOf(

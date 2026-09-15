@@ -158,11 +158,31 @@ object CoreConfigManager {
             val templateConfig = initV2rayConfig(configContext)
             templateConfig.inbounds.firstOrNull { it.tag == "tun" }?.let { inboundTun ->
                 inboundTun.settings?.mtu = SettingsManager.getVpnMtu()
+                // The injected inbound must be able to map the fake IPs of a fakedns config back
+                // to domains; the user's own inbounds are left as written
+                if (hasFakeDnsServer(json)) {
+                    inboundTun.sniffing?.destOverride?.let { if ("fakedns" !in it) it.add("fakedns") }
+                }
                 inboundsJson.add(JsonUtil.parseString(JsonUtil.toJson(inboundTun)))
             }
         }
 
         return JsonUtil.toJsonPretty(json)?.let { ConfigResult(true, configContext.guid, it) } ?: result
+    }
+
+    /**
+     * Check whether the DNS servers of a custom config include fakedns, written either as the
+     * plain "fakedns" string or as a server object whose address is "fakedns".
+     */
+    private fun hasFakeDnsServer(json: JsonObject): Boolean {
+        val servers = json.get("dns")?.takeIf { it.isJsonObject }?.asJsonObject
+            ?.get("servers")?.takeIf { it.isJsonArray }?.asJsonArray
+            ?: return false
+        return servers.any { server ->
+            val address = if (server.isJsonObject) server.asJsonObject.get("address") else server
+            address != null && address.isJsonPrimitive && address.asJsonPrimitive.isString
+                    && address.asString == "fakedns"
+        }
     }
 
     /**
@@ -530,7 +550,7 @@ object CoreConfigManager {
             inbound1.settings?.auth = "noauth"
             inbound1.settings?.accounts = null
         }
-        val fakedns = MmkvManager.decodeSettingsBool(AppConfig.PREF_FAKE_DNS_ENABLED) == true
+        val fakedns = MmkvManager.decodeSettingsBool(AppConfig.PREF_FAKE_DNS_ENABLED, true)
         val sniffAllTlsAndHttp =
             MmkvManager.decodeSettingsBool(AppConfig.PREF_SNIFFING_ENABLED, true) != false
         inbound1.sniffing?.enabled = fakedns || sniffAllTlsAndHttp
@@ -569,8 +589,8 @@ object CoreConfigManager {
      * Enable fake DNS when local DNS and fake DNS are both enabled.
      */
     private fun configureFakeDns(v2rayConfig: V2rayConfig) {
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_LOCAL_DNS_ENABLED) == true
-            && MmkvManager.decodeSettingsBool(AppConfig.PREF_FAKE_DNS_ENABLED) == true
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_LOCAL_DNS_ENABLED, true)
+            && MmkvManager.decodeSettingsBool(AppConfig.PREF_FAKE_DNS_ENABLED, true)
         ) {
             v2rayConfig.fakedns = listOf(V2rayConfig.FakednsBean())
         }
@@ -618,11 +638,11 @@ object CoreConfigManager {
      * Configure local DNS inbounds, outbounds, and routing rules.
      */
     private fun configureLocalDns(configContext: CoreConfigContext, v2rayConfig: V2rayConfig) {
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_LOCAL_DNS_ENABLED) != true) {
+        if (!MmkvManager.decodeSettingsBool(AppConfig.PREF_LOCAL_DNS_ENABLED, true)) {
             return
         }
 
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_FAKE_DNS_ENABLED) == true) {
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_FAKE_DNS_ENABLED, true)) {
             val geositeCn = arrayListOf(AppConfig.GEOSITE_CN)
             val routingDomains = configContext.routingDomainRules
                 .asSequence()
@@ -668,7 +688,7 @@ object CoreConfigManager {
                 V2rayConfig.OutboundBean(
                     protocol = "dns",
                     tag = "dns-out",
-                    settings = null,
+                    settings = V2rayConfig.OutboundBean.OutSettingsBean(userLevel = 12),
                     streamSettings = null,
                     mux = null
                 )
@@ -701,7 +721,7 @@ object CoreConfigManager {
                 V2rayConfig.OutboundBean(
                     protocol = "dns",
                     tag = "dns-out",
-                    settings = null,
+                    settings = V2rayConfig.OutboundBean.OutSettingsBean(userLevel = 12),
                     streamSettings = null,
                     mux = null
                 )
@@ -892,8 +912,10 @@ object CoreConfigManager {
             enableParallelQuery = if ((domesticDns.size + remoteDns.size) > 2) true else null
         )
 
+        // DNS routing, inserted at the top so user rules cannot hijack DNS module queries
+        val dnsRouteRules = mutableListOf<V2rayConfig.RoutingBean.RulesBean>()
         if (domesticDnsTags.isNotEmpty()) {
-            v2rayConfig.routing.rules.add(
+            dnsRouteRules.add(
                 V2rayConfig.RoutingBean.RulesBean(
                     outboundTag = AppConfig.TAG_DIRECT,
                     inboundTag = ArrayList(domesticDnsTags),
@@ -904,7 +926,7 @@ object CoreConfigManager {
 
         val dnsProxyBalancerTag = policyGroupBalancerTags[AppConfig.TAG_PROXY]
         if (dnsProxyBalancerTag != null) {
-            v2rayConfig.routing.rules.add(
+            dnsRouteRules.add(
                 V2rayConfig.RoutingBean.RulesBean(
                     balancerTag = dnsProxyBalancerTag,
                     inboundTag = arrayListOf(AppConfig.TAG_DNS),
@@ -912,7 +934,7 @@ object CoreConfigManager {
                 )
             )
         } else {
-            v2rayConfig.routing.rules.add(
+            dnsRouteRules.add(
                 V2rayConfig.RoutingBean.RulesBean(
                     outboundTag = AppConfig.TAG_PROXY,
                     inboundTag = arrayListOf(AppConfig.TAG_DNS),
@@ -920,6 +942,7 @@ object CoreConfigManager {
                 )
             )
         }
+        v2rayConfig.routing.rules.addAll(0, dnsRouteRules)
     }
 
     private fun buildDnsHostsFromRoutingRules(configContext: CoreConfigContext): MutableMap<String, Any> {
@@ -1002,6 +1025,7 @@ object CoreConfigManager {
                     domains = cnDomains,
                     expectIPs = geoipCn,
                     skipFallback = true,
+                    finalQuery = true,
                     tag = cnDomesticDnsTag
                 )
             )
@@ -1027,6 +1051,7 @@ object CoreConfigManager {
                                 address = address,
                                 domains = rule.domain,
                                 skipFallback = true,
+                                finalQuery = true,
                                 tag = tag
                             )
                         )

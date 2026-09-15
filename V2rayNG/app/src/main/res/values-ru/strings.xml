@@ -81,6 +81,7 @@
     <string name="server_lab_stream_security" translatable="false">TLS</string>
     <string name="server_lab_stream_fingerprint">Отпечаток</string>
     <string name="server_lab_stream_alpn" translatable="false">ALPN</string>
+    <string name="server_lab_cipher_suites">Наборы шифров (Cipher Suites)</string>
     <string name="server_lab_allow_insecure">Пропускать проверку сертификата (allowInsecure)</string>
     <string name="server_lab_sni" translatable="false">SNI</string>
     <string name="server_lab_address3">Адрес</string>
@@ -127,6 +128,7 @@
     <string name="server_lab_xhttp_mode">Режим XHTTP</string>
     <string name="server_lab_xhttp_extra">Необработанный JSON XHTTP Extra, формат: { XHTTPObject }</string>
     <string name="server_lab_final_mask">Необработанный JSON FinalMask, формат: { FinalMaskObject }</string>
+    <string name="server_lab_dial_mode" translatable="false">dialMode</string>
     <string name="server_lab_ech_config_list" translatable="false">echConfigList</string>
     <string name="server_lab_verify_peer_cert_by_name">Проверять сертификат узла по имени</string>
     <string name="server_lab_pinned_ca256">Отпечаток сертификата (SHA-256)</string>
@@ -330,6 +332,9 @@
     <string name="sub_setting_user_agent" translatable="false">User Agent</string>
     <string name="sub_setting_request_headers">Заголовки запроса (формат JSON)</string>
     <string name="sub_setting_filter">Фильтр названий (регулярное выражение)</string>
+    <string name="sub_setting_override_address">Заменить адрес</string>
+    <string name="sub_setting_override_port">Заменить порт</string>
+    <string name="sub_setting_override_tip">Оставьте пустым, чтобы сохранить значение из подписки</string>
     <string name="sub_setting_enable">Включить обновление</string>
     <string name="sub_auto_update">Использовать автообновление</string>
     <string name="sub_allow_insecure_url">Разрешать незащищённые HTTP-адреса</string>
@@ -339,6 +344,7 @@
     <string name="sub_setting_entry_proxy_tip">Выбранный прокси добавляется перед каждым профилем подписки и становится входным звеном цепочки прокси для этого профиля.</string>
     <string name="sub_setting_exit_proxy_tip">Выбранный прокси добавляется после каждого профиля подписки и становится выходным звеном цепочки прокси для этого профиля.</string>
     <string name="toast_invalid_update_interval">Неправильный интервал обновления. Минимум 15 минут.</string>
+    <string name="toast_invalid_override_port">Недопустимый порт замены. Укажите значение от 1 до 65535.</string>
     <string name="title_sub_update">Обновить подписку</string>
     <string name="title_ping_all_server">Проверить TCP-задержку (TCPing)</string>
     <string name="title_real_ping_all_server">Проверить реальную задержку</string>
@@ -560,5 +566,65 @@
     <string name="tasker_blurb_stop">Остановить %1$s</string>
     <string name="connection_test_empty_message">подробности отсутствуют</string>
     <string name="value_unknown">неизвестно</string>
+    <string name="aether_lab_protocol">Протокол</string>
+    <string name="aether_lab_transport">Транспорт</string>
+    <string name="aether_lab_scan_mode">Режим сканирования</string>
+    <string name="aether_lab_obfuscation">Обфускация</string>
+    <string name="aether_lab_ip_version">Версия IP</string>
+    <string name="aether_lab_fragment">Фрагментировать ClientHello</string>
+    <string name="aether_lab_fragment_size">Размер фрагментов (байт)</string>
+    <string name="aether_lab_fragment_delay">Задержка между фрагментами (мс)</string>
+    <string name="aether_lab_wiw_outer">Внешний узел</string>
+    <string name="aether_lab_wiw_inner">Внутренний узел</string>
+    <string name="aether_hint_endpoint">Оставьте пустым для сканирования</string>
+    <string name="aether_action_scan">Найти сервер</string>
+    <string name="aether_action_scanning">Сканирование…</string>
+    <string name="aether_scan_success">Сервер найден</string>
+    <string name="aether_scan_failed">Сервер не найден</string>
+    <string name="aether_invalid_endpoint">Укажите IP-адрес и порт или оставьте адрес пустым для сканирования</string>
+    <string name="aether_invalid_hop">Укажите адрес и порт, например 162.159.192.1:2408</string>
+    <string name="aether_same_hop">Узлы должны иметь разные адреса</string>
+    <string name="aether_invalid_fragment">Укажите число или диапазон, например 16-32: размер 1–4096 байт, задержка 0–1000 мс</string>
+    <string name="aether_unsupported_abi">Ядро Aether недоступно для этого устройства</string>
+    <string name="aether_core_stopped">Ядро Aether остановлено</string>
+    <string name="aether_core_connecting">Ядро Aether ещё подключается</string>
+    <string name="menu_item_import_config_manually_aether">Добавить конфигурацию Aether вручную</string>
+    <string name="aether_action_renew_key">Получить новый ключ WARP</string>
+    <string name="aether_action_renewing_key">Получение нового ключа…</string>
+    <string name="aether_confirm_renew_key">Текущий ключ WARP будет удалён, и будет зарегистрирован новый. Если регистрация не удастся, текущий ключ сохранится.</string>
+    <string name="aether_log_title">Журнал</string>
+    <string name="aether_log_empty">Здесь появятся результаты сканирования и состояние ключа WARP</string>
+    <string name="aether_log_scan_started">Поиск сервера…</string>
+    <string name="aether_log_scan_found">Найдено: %1$s</string>
+    <string name="aether_log_scan_found_hops">Найдены внешний узел %1$s и внутренний узел %2$s</string>
+    <string name="aether_log_scan_cancelled">Сканирование отменено</string>
+    <string name="aether_log_key_renewing">Удаление старого ключа WARP и регистрация нового…</string>
+    <string name="aether_log_key_renewed">Новый ключ WARP готов и будет использован при следующем подключении</string>
+    <string name="aether_log_key_renew_failed">Не удалось зарегистрировать новый ключ WARP; прежний ключ сохранён</string>
+    <string name="aether_log_masque_key_ready">Ключ MASQUE: устройство %1$s, IPv4 %2$s, IPv6 %3$s</string>
+    <string name="aether_log_masque_key_missing">Ключ MASQUE: ещё не зарегистрирован; будет создан при первом сканировании или подключении</string>
+    <string name="aether_log_wireguard_key_ready">Ключ WireGuard: устройство %1$s, IPv4 %2$s, IPv6 %3$s</string>
+    <string name="aether_log_wireguard_key_missing">Ключ WireGuard: ещё не зарегистрирован; будет создан при первом сканировании или подключении</string>
+    <string name="aether_log_outer_key_ready">Ключ внешнего узла: устройство %1$s, IPv4 %2$s, IPv6 %3$s</string>
+    <string name="aether_log_outer_key_missing">Ключ внешнего узла: ещё не зарегистрирован; будет создан при первом сканировании или подключении</string>
+    <string name="aether_log_inner_key_ready">Ключ внутреннего узла: устройство %1$s, IPv4 %2$s, IPv6 %3$s</string>
+    <string name="aether_log_inner_key_missing">Ключ внутреннего узла: ещё не зарегистрирован; будет создан при первом сканировании или подключении</string>
+    <string name="aether_renew_blocked">Отключите профиль Aether, прежде чем получать новый ключ WARP: текущее подключение использует этот ключ</string>
+    <string name="aether_scan_blocked">Отключите профиль Aether, прежде чем сканировать: сканирование откроет второй туннель с ключом текущего подключения</string>
+    <string name="title_aether_core">Ядро Aether</string>
+    <string name="summary_aether_core">Клиент WARP от CluvexStudio, включён по лицензии AGPL-3.0. Нажмите, чтобы открыть исходный код.</string>
+    <string-array name="aether_scan_entries">
+        <item>Турбо</item>
+        <item>Сбалансированный</item>
+        <item>Тщательный</item>
+        <item>Скрытный</item>
+        <item>Надёжный</item>
+    </string-array>
+    <string-array name="aether_obfuscation_entries">
+        <item>Выкл.</item>
+        <item>Лёгкая</item>
+        <item>Сбалансированная</item>
+        <item>Агрессивная</item>
+    </string-array>
 
 </resources>

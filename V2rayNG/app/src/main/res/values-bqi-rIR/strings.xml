@@ -81,6 +81,7 @@
     <string name="server_lab_stream_security" translatable="false">TLS</string>
     <string name="server_lab_stream_fingerprint">جا کلک</string>
     <string name="server_lab_stream_alpn" translatable="false">ALPN</string>
+    <string name="server_lab_cipher_suites">Cipher Suites</string>
     <string name="server_lab_allow_insecure">تئیڌ گوواهی ن ناڌیڌه بگرین (allowInsecure)</string>
     <string name="server_lab_sni" translatable="false">SNI</string>
     <string name="server_lab_address3">نشۊوی</string>
@@ -127,6 +128,7 @@
     <string name="server_lab_xhttp_mode">حالت XHTTP</string>
     <string name="server_lab_xhttp_extra">XHTTP Extra خام JSON، قالوو: { XHTTPObject }</string>
     <string name="server_lab_final_mask">finalMask خام JSON، قالوو: { FinalMaskObject }</string>
+    <string name="server_lab_dial_mode" translatable="false">dialMode</string>
     <string name="server_lab_ech_config_list" translatable="false">echConfigList</string>
     <string name="server_lab_verify_peer_cert_by_name">تئیڌ گوواهی هومتا و ری نوم</string>
     <string name="server_lab_pinned_ca256">جا کلک گوواهی (SHA-256)</string>
@@ -330,6 +332,9 @@
     <string name="sub_setting_user_agent" translatable="false">User Agent</string>
     <string name="sub_setting_request_headers">سرآیندا درخواست (قالوو JSON)</string>
     <string name="sub_setting_filter">فیلتر نیشتنا وا regex</string>
+    <string name="sub_setting_override_address">جایگزینی نشۊوی</string>
+    <string name="sub_setting_override_port">جایگزینی پورت</string>
+    <string name="sub_setting_override_tip">برای نگه داشتن مقدار اشتراک خالی بگذارید</string>
     <string name="sub_setting_enable">ره وندن ورۊ کردن</string>
     <string name="sub_auto_update">ره وندن ورۊ کردن خوتکار</string>
     <string name="sub_allow_insecure_url">موجاز کردن نشۊوی HTTP نا ٱمن</string>
@@ -339,6 +344,7 @@
     <string name="sub_setting_entry_proxy_tip">ای پروکسی پؽش ز هر کانفیگ من ای اشتراک، وری ٱول عوزو زنجیره پروکسی اضاف ابۊ.</string>
     <string name="sub_setting_exit_proxy_tip">ای پروکسی بئڌ ز هر کانفیگ من ای اشتراک، وری آخر عوزو زنجیره پروکسی اضاف ابۊ.</string>
     <string name="toast_invalid_update_interval">فاصله ورۊ کردن نا موئتبر هڌ. حداقل مقدار 15 دؽقه هڌ.</string>
+    <string name="toast_invalid_override_port">پورت جایگزین نامعتبر است. عددی بین 1 تا 65535 وارد کنید.</string>
     <string name="title_sub_update">ورۊ کردن اشتراک بونکۊ سکویی</string>
     <string name="title_ping_all_server">آزمایش تئخیر TCP (TCPing)</string>
     <string name="title_real_ping_all_server">آزمایش تئخیر واقعی</string>
@@ -556,5 +562,65 @@
     <string name="tasker_blurb_stop">واڌاشتن %1$s</string>
     <string name="connection_test_empty_message">دووسمندی نؽ</string>
     <string name="value_unknown">نا مؽخص</string>
+    <string name="aether_lab_protocol">پروتکل</string>
+    <string name="aether_lab_transport">حامل</string>
+    <string name="aether_lab_scan_mode">حالت اسکن</string>
+    <string name="aether_lab_obfuscation">مبهم‌سازی</string>
+    <string name="aether_lab_ip_version">نسخه IP</string>
+    <string name="aether_lab_fragment">تکه‌تکه کردن ClientHello</string>
+    <string name="aether_lab_fragment_size">اندازه تکه‌یل (بایت)</string>
+    <string name="aether_lab_fragment_delay">تأخیر میون تکه‌یل (میلی‌ثانیه)</string>
+    <string name="aether_lab_wiw_outer">مسیر بیرونی</string>
+    <string name="aether_lab_wiw_inner">مسیر درونی</string>
+    <string name="aether_hint_endpoint">خالی بیلید تا اسکن بوهه</string>
+    <string name="aether_action_scan">اسکن سی پیدا کردن سرور</string>
+    <string name="aether_action_scanning">د حال اسکن…</string>
+    <string name="aether_scan_success">سرور پیدا بی</string>
+    <string name="aether_scan_failed">سروری پیدا نبی</string>
+    <string name="aether_invalid_endpoint">یه نشۊوی IP وو پورت بنویسین، یا نشۊوی ن خالی بیلین تا اسکن بۊ</string>
+    <string name="aether_invalid_hop">نشونی و پورت ره با هم بنویسید، مثل 162.159.192.1:2408</string>
+    <string name="aether_same_hop">دو مسیر بایس نشونی جیا داشته بوهن</string>
+    <string name="aether_invalid_fragment">یه عدد یا بازه مثل 16-32 بنویسین: اندازه 1 تا 4096 بایت، تأخیر 0 تا 1000 میلی‌ثانیه</string>
+    <string name="aether_unsupported_abi">هسته Aether سی ای دستگاه د دسترس نیه</string>
+    <string name="aether_core_stopped">هسته Aether وستاده</string>
+    <string name="aether_core_connecting">هسته Aether هونی وصل ابۊ</string>
+    <string name="menu_item_import_config_manually_aether">افزودن دستی کانفیگ Aether</string>
+    <string name="aether_action_renew_key">گرفتن کلید تازه WARP</string>
+    <string name="aether_action_renewing_key">د حال گرفتن کلید تازه…</string>
+    <string name="aether_confirm_renew_key">کلید ایسه WARP پاک ابۊ و یه کلید تازه ثبت ابۊ. ار ثبت نبی، کلید ایسه مۊنه.</string>
+    <string name="aether_log_title">لاگ</string>
+    <string name="aether_log_empty">نتیجه اسکنا و وضعیت کلید WARP ایچو نشووݩ داڌه ابۊ</string>
+    <string name="aether_log_scan_started">د حال اسکن سی پیدا کردن سرور…</string>
+    <string name="aether_log_scan_found">پیدا بی: %1$s</string>
+    <string name="aether_log_scan_found_hops">مسیر بیرونی %1$s و مسیر درونی %2$s پیدا بی</string>
+    <string name="aether_log_scan_cancelled">اسکن لغو بی</string>
+    <string name="aether_log_key_renewing">د حال پاک کردن کلید قبلی WARP و ثبت کلید تازه…</string>
+    <string name="aether_log_key_renewed">کلید تازه WARP آماده‌س و ز اتصال بعدی و کار ابۊ</string>
+    <string name="aether_log_key_renew_failed">ثبت کلید تازه WARP نبی؛ کلید قبلی مند</string>
+    <string name="aether_log_masque_key_ready">کلید MASQUE: دستگاه %1$s، IPv4 %2$s، IPv6 %3$s</string>
+    <string name="aether_log_masque_key_missing">کلید MASQUE: هنی ثبت نبیڌه؛ د اولین اسکن یا اتصال ثبت ابۊ</string>
+    <string name="aether_log_wireguard_key_ready">کلید WireGuard: دستگاه %1$s، IPv4 %2$s، IPv6 %3$s</string>
+    <string name="aether_log_wireguard_key_missing">کلید WireGuard: هنی ثبت نبیڌه؛ د اولین اسکن یا اتصال ثبت ابۊ</string>
+    <string name="aether_log_outer_key_ready">کلید مسیر بیرونی: دستگاه %1$s، IPv4 %2$s، IPv6 %3$s</string>
+    <string name="aether_log_outer_key_missing">کلید مسیر بیرونی: هنی ثبت نبیڌه؛ د اولین اسکن یا اتصال ثبت ابۊ</string>
+    <string name="aether_log_inner_key_ready">کلید مسیر درونی: دستگاه %1$s، IPv4 %2$s، IPv6 %3$s</string>
+    <string name="aether_log_inner_key_missing">کلید مسیر درونی: هنی ثبت نبیڌه؛ د اولین اسکن یا اتصال ثبت ابۊ</string>
+    <string name="aether_renew_blocked">پیش زه گرفتن کلید تازه WARP، اتصال Aether نه قطع کنین؛ اتصال ایسا زه کلید ایسا استفاده ایکنه</string>
+    <string name="aether_scan_blocked">پیش زه اسکن، اتصال Aether نه قطع کنین؛ اسکن یه تونل دوم وا کلید اتصال ایسا وا ایکنه</string>
+    <string name="title_aether_core">هسته Aether</string>
+    <string name="summary_aether_core">کلاینت WARP که CluvexStudio ساخته و وا مجوز AGPL-3.0 ور برنامه هده. سی دیدن کد منبع بزنین.</string>
+    <string-array name="aether_scan_entries">
+        <item>توربو</item>
+        <item>متعادل</item>
+        <item>دقیق</item>
+        <item>پنهونی</item>
+        <item>تضمینی</item>
+    </string-array>
+    <string-array name="aether_obfuscation_entries">
+        <item>خاموش</item>
+        <item>سبک</item>
+        <item>متعادل</item>
+        <item>شدید</item>
+    </string-array>
 
 </resources>

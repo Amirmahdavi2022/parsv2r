@@ -233,6 +233,7 @@ abstract class BaseServerActivity : BaseComponentActivity() {
                 state.finalMask,
                 { state.finalMask = it }
             )
+            CommonDialModeField(state)
             if (state.network == NetworkType.WS.type || state.network == NetworkType.XHTTP.type) {
                 FormDropdownField(
                     stringResource(R.string.server_lab_browser_dialer),
@@ -242,6 +243,16 @@ abstract class BaseServerActivity : BaseComponentActivity() {
                 )
             }
         }
+    }
+
+    /** dialMode goes to streamSettings.sockopt, so every protocol offers it. */
+    @Composable
+    protected fun CommonDialModeField(state: ServerUiState) {
+        FormTextField(
+            stringResource(R.string.server_lab_dial_mode),
+            state.dialMode,
+            { state.dialMode = it }
+        )
     }
 
     @Composable
@@ -287,6 +298,11 @@ abstract class BaseServerActivity : BaseComponentActivity() {
                     state.alpn,
                     options.alpnOptions,
                     { state.alpn = it }
+                )
+                FormTextField(
+                    stringResource(R.string.server_lab_cipher_suites),
+                    state.cipherSuites,
+                    { state.cipherSuites = it }
                 )
                 FormTextField(
                     stringResource(R.string.server_lab_ech_config_list),
@@ -364,7 +380,7 @@ abstract class BaseServerActivity : BaseComponentActivity() {
         }
     }
 
-    protected fun validateBasicConfig(state: ServerUiState): Boolean {
+    protected open fun validateBasicConfig(state: ServerUiState): Boolean {
         if (state.remarks.isBlank()) {
             toast(R.string.server_lab_remarks)
             return false

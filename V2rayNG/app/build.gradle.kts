@@ -13,8 +13,8 @@ android {
         applicationId = "com.parsv2r.app"
         minSdk = 24
         targetSdk = 37
-        versionCode = 748
-        versionName = "2.3.8"
+        versionCode = 749
+        versionName = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "2.3.8"
 
         val abiFilterList = (properties["ABI_FILTERS"] as? String)?.split(';')
         splits {
@@ -206,5 +206,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.org.mockito.mockito.inline)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
