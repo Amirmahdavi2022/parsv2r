@@ -302,6 +302,8 @@
     <string name="title_mode">Mode</string>
     <string name="title_mode_help">Click me for more help</string>
     <string name="title_language">Language</string>
+    <string name="title_pref_show_advanced_settings">Show advanced settings</string>
+    <string name="summary_pref_show_advanced_settings">VPN, core, MUX, fragment and routing options. Hiding them does not turn anything off.</string>
     <string name="title_ui_settings">UI settings</string>
     <string name="title_pref_ui_mode_night">UI mode settings</string>
     <string name="title_pref_dynamic_color">Enable dynamic color</string>

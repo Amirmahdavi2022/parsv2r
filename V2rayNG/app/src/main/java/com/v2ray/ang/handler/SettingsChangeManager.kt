@@ -21,6 +21,7 @@ object SettingsChangeManager {
         AppConfig.PREF_UI_MODE_NIGHT,
         AppConfig.PREF_DYNAMIC_COLOR,
         AppConfig.PREF_IS_BOOTED,
+        AppConfig.PREF_SHOW_ADVANCED_SETTINGS,
     )
 
     /**
