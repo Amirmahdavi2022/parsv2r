@@ -25,7 +25,9 @@ import com.v2ray.ang.extension.isNotNullEmpty
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.NotificationManager
 import com.v2ray.ang.handler.SettingsManager
-import com.v2ray.ang.handler.SpeedtestManager
+import com.v2ray.ang.handler.ExitCheckHttp
+import com.v2ray.ang.handler.ExitCheckLogic
+import com.v2ray.ang.handler.ExitPlaceStore
 import com.v2ray.ang.helper.MessageHelper
 import com.v2ray.ang.service.DialerNativeService
 import com.v2ray.ang.service.DialerWebviewService
@@ -55,6 +57,7 @@ object CoreServiceManager {
     private val coreController: CoreController = CoreNativeManager.newCoreController(CoreCallback())
     private val mMsgReceive = ReceiveMessageHandler()
     private var currentConfig: ProfileItem? = null
+    private var currentGuid: String? = null
     private var processFinder: XrayProcessFinder? = null
     private var browserDialer: IDialerService? = null
     private var networkMonitor: NetworkMonitor? = null
@@ -190,6 +193,7 @@ object CoreServiceManager {
         isReload: Boolean,
     ) {
         currentConfig = config
+        currentGuid = guid
         var tunFd = vpnInterface?.fd ?: 0
         val dialerMode = BrowserDialerMode.from(config.browserDialerMode)
         val dialerAddr = if (dialerMode != null) {
@@ -467,12 +471,33 @@ object CoreServiceManager {
             }
 
             ensureActive()
-            val endpoint = if (time >= 0) SpeedtestManager.getRemoteIPInfo() else null
+            // Where this config comes out, as several IP databases agree on it. Kept per config
+            // so the list can show it next to the name, and so a changing "fixed" IP is caught.
+            val place = if (time >= 0) {
+                try {
+                    ExitCheckHttp(
+                        SettingsManager.getHttpPort(),
+                        SettingsManager.getSocksUsername(),
+                        SettingsManager.getSocksPassword(),
+                        timeoutMs = 6_000,
+                    ).lookupPlace()
+                } catch (e: Exception) {
+                    LogUtil.e(AppConfig.TAG, "StartCore-Manager: exit place lookup failed", e)
+                    null
+                }
+            } else null
+            ensureActive()
+            place?.let { ExitPlaceStore.record(currentGuid, it) }
+            val placeText = when {
+                place == null -> null
+                place.anycast -> service.getString(R.string.exit_place_anycast)
+                else -> ExitCheckLogic.placeLabel(place) ?: service.getString(R.string.exit_place_unknown)
+            }
             val result = ConnectionTestResult(
                 delayMillis = time,
                 errorMessage = errorStr,
-                country = endpoint?.country,
-                ipAddress = endpoint?.ipAddress,
+                country = placeText,
+                ipAddress = place?.ip,
             )
             withContext(Dispatchers.Main.immediate) {
                 if (isRunning()) {

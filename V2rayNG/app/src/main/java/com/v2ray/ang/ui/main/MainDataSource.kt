@@ -6,6 +6,7 @@ import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.dto.entities.ServerAffiliationInfo
 import com.v2ray.ang.dto.entities.SubscriptionCache
 import com.v2ray.ang.dto.entities.SubscriptionItem
+import com.v2ray.ang.handler.StoredPlace
 import kotlinx.coroutines.flow.Flow
 import java.io.Closeable
 
@@ -31,6 +32,7 @@ interface MainDataSource : Closeable {
     fun getServerGuidList(groupId: String): List<String>
     fun decodeServerConfig(guid: String): ProfileItem?
     fun decodeAffiliationInfo(guid: String): ServerAffiliationInfo?
+    fun getExitPlace(guid: String): StoredPlace? = null
 
     fun encodeServerList(guids: List<String>, groupId: String)
 

@@ -65,6 +65,7 @@ import com.v2ray.ang.extension.toast
 import com.v2ray.ang.handler.CheckedService
 import com.v2ray.ang.handler.ExitCheckLogic
 import com.v2ray.ang.handler.ExitLocation
+import com.v2ray.ang.handler.ExitPlace
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.ServiceResult
 import com.v2ray.ang.handler.ServiceVerdict
@@ -95,13 +96,27 @@ class ExitCheckActivity : BaseComponentActivity() {
         httpPort = SettingsManager.getHttpPort(),
         username = SettingsManager.getSocksUsername(),
         password = SettingsManager.getSocksPassword(),
+        guid = MmkvManager.getSelectServer(),
     )
 
     private fun runCheck() = viewModel.start(proxy())
 
     private fun share(state: ExitCheckUiState) {
         val text = ExitCheckLogic.shareText(
-            location = state.location?.let { it.copy(country = countryName(it)) },
+            location = state.location?.let { loc ->
+                // only what the databases agree on goes into the shared text
+                val p = state.place
+                val known = p?.known == true
+                loc.copy(
+                    city = if (known) p?.city else null,
+                    countryCode = if (known) p?.countryCode else null,
+                    country = when {
+                        known -> p?.countryCode?.let { ExitCheckLogic.countryLabel(it) }
+                        p?.anycast == true -> getString(R.string.exit_place_anycast)
+                        else -> getString(R.string.exit_place_unknown)
+                    },
+                )
+            },
             results = state.rows.mapNotNull { it.second },
             header = getString(R.string.exit_check_share_header),
             locationLabel = getString(R.string.exit_check_share_location),
@@ -239,6 +254,7 @@ fun ExitCheckScreen(
                     } else {
                         LocationCard(
                             location = state.location,
+                            place = state.place,
                             loading = state.phase == ExitCheckPhase.RUNNING,
                             onCopyIp = onCopyIp
                         )
@@ -290,7 +306,7 @@ private fun MessageCard(title: String, body: String) {
 }
 
 @Composable
-private fun LocationCard(location: ExitLocation?, loading: Boolean, onCopyIp: (String) -> Unit) {
+private fun LocationCard(location: ExitLocation?, place: ExitPlace?, loading: Boolean, onCopyIp: (String) -> Unit) {
     Surface(
         shape = RoundedCornerShape(24.dp),
         color = MaterialTheme.colorScheme.surfaceContainer,
@@ -320,23 +336,30 @@ private fun LocationCard(location: ExitLocation?, loading: Boolean, onCopyIp: (S
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        val flag = ExitCheckLogic.flagEmoji(loc.countryCode)
+                        val known = place?.known == true
+                        val flag = if (known) ExitCheckLogic.flagEmoji(place?.countryCode) else "🌐"
                         if (flag.isNotEmpty()) {
                             Text(flag, fontSize = 40.sp, modifier = Modifier.clearAndSetSemantics { })
                             Spacer(Modifier.width(12.dp))
                         }
                         Column {
+                            val cc = place?.countryCode
                             Text(
-                                text = loc.city ?: stringResource(R.string.exit_check_unknown_city),
+                                text = when {
+                                    place?.anycast == true -> stringResource(R.string.exit_place_anycast).removePrefix("🌐 ")
+                                    !known || cc == null -> stringResource(R.string.exit_place_unknown).removePrefix("🌐 ")
+                                    else -> place?.city ?: ExitCheckLogic.countryLabel(cc ?: "")
+                                },
                                 style = MaterialTheme.typography.headlineSmall,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            Text(
-                                text = listOfNotNull(loc.region?.takeIf { it != loc.city }, countryName(loc))
-                                    .joinToString("، "),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                            if (known && cc != null && place?.city != null) {
+                                Text(
+                                    text = ExitCheckLogic.countryLabel(cc),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
                     }
                     if (!loc.isp.isNullOrBlank()) {

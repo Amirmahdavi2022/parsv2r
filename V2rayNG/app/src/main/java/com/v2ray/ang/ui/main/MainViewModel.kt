@@ -132,6 +132,8 @@ class MainViewModel(
             MainServiceEvent.StateStartSuccess -> {
                 toastSuccess(R.string.toast_services_success)
                 updateRunningState(true)
+                // Test once on connect, so the row gets its exit place without a tap.
+                testCurrentServerRealPing()
             }
 
             is MainServiceEvent.StateStartFailure -> {
@@ -152,6 +154,7 @@ class MainViewModel(
             is MainServiceEvent.MeasureDelayResult -> {
                 if (!uiState.value.isRunning || !testRequests.completeCurrent(event.requestId)) return
                 _uiState.update { it.copy(isTesting = testRequests.isTesting, status = MainStatus.ConnectionTest(event.result)) }
+                refreshExitPlace(dataSource.getSelectServer())
             }
 
             is MainServiceEvent.MeasureConfigSuccess -> {
@@ -220,6 +223,20 @@ class MainViewModel(
                 servers = applyTestDelayResults(current.servers, updates),
                 rows = applyTestDelayResultsToRows(current.rows, updates),
             )
+        }
+    }
+
+    /** The core has just stored where [guid] comes out; show it on that row in every group. */
+    private fun refreshExitPlace(guid: String?) {
+        if (guid.isNullOrEmpty()) return
+        viewModelScope.launch {
+            val place = withContext(ioDispatcher) { dataSource.getExitPlace(guid) } ?: return@launch
+            groupUiFlows.values.forEach { flow ->
+                flow.update { current ->
+                    if (current.rows.none { it.guid == guid }) current
+                    else current.copy(rows = current.rows.map { if (it.guid == guid) it.copy(exitPlace = place) else it })
+                }
+            }
         }
     }
 
@@ -416,7 +433,8 @@ class MainViewModel(
         return servers.map { server ->
             buildServerRowUiModel(
                 server = server,
-                subscriptionRemarks = subscriptionRemarks[server.profile.subscriptionId].orEmpty()
+                subscriptionRemarks = subscriptionRemarks[server.profile.subscriptionId].orEmpty(),
+                exitPlace = dataSource.getExitPlace(server.guid)
             )
         }
     }

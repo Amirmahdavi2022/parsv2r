@@ -1,6 +1,7 @@
 package com.v2ray.ang.handler
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -180,5 +181,109 @@ class ExitCheckLogicTest {
         assertTrue(text.endsWith("t.me/parsv2r"))
         // the IP is deliberately not in the shared text
         assertTrue(!text.contains("1.2.3.4"))
+    }
+
+    // ---- consensus place ----
+
+    private fun loc(cc: String?, city: String?, asn: Int? = 24940, isp: String? = "Hetzner", ip: String = "5.6.7.8") =
+        ExitLocation(ip, city, null, null, cc, isp, asn)
+
+    @Test
+    fun asnIsReadFromEachDatabase() {
+        assertEquals(8075, ExitCheckLogic.parseLocation("""{"ip":"1.1.1.2","country_code":"US","connection":{"asn":8075,"isp":"Microsoft"}}""")!!.asn)
+        assertEquals(13335, ExitCheckLogic.parseLocation("""{"ip":"1.1.1.2","country":"US","org":"AS13335 Cloudflare, Inc."}""")!!.asn)
+        assertEquals(24940, ExitCheckLogic.parseLocation("""{"ip":"1.1.1.2","country_code":"DE","asn":24940}""")!!.asn)
+    }
+
+    @Test
+    fun threeAgreeingDatabasesGiveCountryAndCity() {
+        val p = ExitCheckLogic.consensus(listOf(loc("DE", "Frankfurt am Main"), loc("DE", "Frankfurt"), loc("DE", "Frankfurt")))!!
+        assertEquals("DE", p.countryCode)
+        assertTrue(p.city!!.startsWith("Frankfurt"))
+        assertTrue(p.known)
+        assertEquals(3, p.agreeing)
+        assertEquals("🇩🇪 Germany · ${p.city}", ExitCheckLogic.placeLabel(p))
+    }
+
+    @Test
+    fun cityDisagreementKeepsOnlyTheCountry() {
+        val p = ExitCheckLogic.consensus(listOf(loc("US", "Des Moines"), loc("US", "San Jose"), loc("US", null)))!!
+        assertEquals("US", p.countryCode)
+        assertNull(p.city)
+        assertEquals("🇺🇸 USA", ExitCheckLogic.placeLabel(p))
+    }
+
+    @Test
+    fun oneDatabaseAloneIsNotTrusted() {
+        val p = ExitCheckLogic.consensus(listOf(loc("NL", "Amsterdam")))!!
+        assertFalse(p.known)
+        assertNull(ExitCheckLogic.placeLabel(p))
+        assertEquals("5.6.7.8", p.ip)
+    }
+
+    @Test
+    fun countryDisagreementIsUnknown() {
+        assertFalse(ExitCheckLogic.consensus(listOf(loc("NL", "A"), loc("DE", "B")))!!.known)
+        // a tie between two countries is unknown too
+        assertFalse(ExitCheckLogic.consensus(listOf(loc("NL", "A"), loc("NL", "A"), loc("DE", "B"), loc("DE", "B")))!!.known)
+    }
+
+    @Test
+    fun cloudflareIsUnknownEvenWhenTheDatabasesAgree() {
+        val viaAsn = ExitCheckLogic.consensus(listOf(loc("DE", "Frankfurt", 13335), loc("DE", "Frankfurt"), loc("DE", "Frankfurt")))!!
+        assertTrue(viaAsn.anycast)
+        assertFalse(viaAsn.known)
+        assertNull(ExitCheckLogic.placeLabel(viaAsn))
+        val warp = ExitCheckLogic.consensus(listOf(loc("NL", "Amsterdam", 209242), loc("NL", "Amsterdam")))!!
+        assertTrue(warp.anycast)
+        val viaName = ExitCheckLogic.consensus(listOf(loc("US", "X", null, "Cloudflare, Inc."), loc("US", "X", null, "x")))!!
+        assertTrue(viaName.anycast)
+    }
+
+    @Test
+    fun noAnswersIsNull() {
+        assertNull(ExitCheckLogic.consensus(emptyList()))
+    }
+
+    @Test
+    fun countryLabels() {
+        assertEquals("USA", ExitCheckLogic.countryLabel("US"))
+        assertEquals("UK", ExitCheckLogic.countryLabel("gb"))
+        assertEquals("France", ExitCheckLogic.countryLabel("FR"))
+    }
+
+    // ---- per-config record ----
+
+    private fun place(ip: String?) = ExitPlace(ip, "DE", "Berlin", anycast = false, sources = 3, agreeing = 3)
+
+    @Test
+    fun firstCheckIsNotAChange() {
+        val r = StoredPlace.next(null, place("1.1.1.1"), 10)
+        assertEquals("1.1.1.1", r.ip)
+        assertFalse(r.ipChanged)
+        assertEquals(10, r.checkedAt)
+    }
+
+    @Test
+    fun aDifferentIpIsFlaggedAndStaysFlagged() {
+        val first = StoredPlace.next(null, place("1.1.1.1"), 1)
+        val second = StoredPlace.next(first, place("2.2.2.2"), 2)
+        assertTrue(second.ipChanged)
+        assertEquals("1.1.1.1", second.previousIp)
+        val third = StoredPlace.next(second, place("1.1.1.1"), 3)
+        assertTrue(third.ipChanged)
+    }
+
+    @Test
+    fun sameIpOrMissingIpIsNotAChange() {
+        val first = StoredPlace.next(null, place("1.1.1.1"), 1)
+        assertFalse(StoredPlace.next(first, place("1.1.1.1"), 2).ipChanged)
+        assertFalse(StoredPlace.next(first, place(null), 2).ipChanged)
+    }
+
+    @Test
+    fun storedPlaceRoundTripsThroughLabel() {
+        val r = StoredPlace.next(null, place("1.1.1.1"), 1)
+        assertEquals("🇩🇪 Germany · Berlin", ExitCheckLogic.placeLabel(r.toPlace()))
     }
 }

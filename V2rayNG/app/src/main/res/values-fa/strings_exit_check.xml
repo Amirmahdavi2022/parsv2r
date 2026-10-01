@@ -27,4 +27,8 @@
     <string name="exit_check_share_location">خروجی:</string>
     <string name="exit_check_share_footer">تست شده با ParsV2R\nt.me/parsv2r</string>
     <string name="exit_check_google">جستجوی گوگل</string>
+    <string name="exit_place_anycast">🌐 نامشخص (کلودفلر)</string>
+    <string name="exit_place_unknown">🌐 نامشخص</string>
+    <string name="exit_place_ip_changed">آی‌پی ثابت نیست</string>
+    <string name="acc_exit_place">محل خروجی: %1$s</string>
 </resources>

@@ -1,5 +1,9 @@
 package com.v2ray.ang.ui.main
 
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import com.v2ray.ang.handler.StoredPlace
+import com.v2ray.ang.handler.ExitCheckLogic
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -404,6 +408,9 @@ private fun ServerListItem(
                     }
                 }
             }
+            row.exitPlace?.let { place ->
+                ExitPlaceLine(place)
+            }
             Spacer(modifier = Modifier.height(6.dp))
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 if (row.subscriptionBadge.isNotBlank()) {
@@ -430,6 +437,45 @@ private fun ServerListItem(
                 Text(row.typeDescription, style = MaterialTheme.typography.bodySmall, color = colorConfigType, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(testResult, style = MaterialTheme.typography.bodySmall, color = if (row.testDelayMillis < 0L) colorPingRed else colorPing, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
+        }
+    }
+}
+
+/** "🇩🇪 Germany · Frankfurt" under the config name, from the last check through it. */
+@Composable
+private fun ExitPlaceLine(place: StoredPlace) {
+    val label = when {
+        place.anycast -> stringResource(R.string.exit_place_anycast)
+        else -> ExitCheckLogic.placeLabel(place.toPlace()) ?: stringResource(R.string.exit_place_unknown)
+    }
+    val known = !place.anycast && place.countryCode != null
+    val spoken = stringResource(R.string.acc_exit_place, label)
+    Row(
+        Modifier
+            .padding(top = 6.dp)
+            .clearAndSetSemantics { contentDescription = spoken },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = if (known) FontWeight.SemiBold else FontWeight.Normal,
+            color = if (known) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = if (known) 0.12f else 0.06f))
+                .padding(horizontal = 8.dp, vertical = 3.dp),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        if (place.ipChanged && !place.anycast) {
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = "⚠ " + stringResource(R.string.exit_place_ip_changed),
+                style = MaterialTheme.typography.labelSmall,
+                color = colorPingRed,
+                maxLines = 1
+            )
         }
     }
 }

@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.v2ray.ang.handler.CheckedService
 import com.v2ray.ang.handler.ExitCheckHttp
 import com.v2ray.ang.handler.ExitLocation
+import com.v2ray.ang.handler.ExitPlace
+import com.v2ray.ang.handler.ExitPlaceStore
 import com.v2ray.ang.handler.ServiceResult
 import com.v2ray.ang.handler.ServiceVerdict
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,6 +23,8 @@ enum class ExitCheckPhase { NOT_CONNECTED, DYNAMIC_PORT, RUNNING, DONE }
 data class ExitCheckUiState(
     val phase: ExitCheckPhase = ExitCheckPhase.NOT_CONNECTED,
     val location: ExitLocation? = null,
+    /** What the IP databases agree on; drives the headline. */
+    val place: ExitPlace? = null,
     /** One entry per service, in display order; null verdict while still testing. */
     val rows: List<Pair<CheckedService, ServiceResult?>> = CheckedService.entries.map { it to null },
 ) {
@@ -40,11 +44,15 @@ data class ExitCheckProxy(
     val httpPort: Int,
     val username: String?,
     val password: String?,
+    /** The connected config, so the place found here also shows on its row. */
+    val guid: String? = null,
 )
 
 class ExitCheckViewModel @JvmOverloads constructor(
     private val runner: (ExitCheckProxy) -> ExitCheckHttp.Report = { p ->
-        ExitCheckHttp(p.httpPort, p.username, p.password).run()
+        ExitCheckHttp(p.httpPort, p.username, p.password).run().also { r ->
+            r.place?.let { ExitPlaceStore.record(p.guid, it) }
+        }
     },
     private val io: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
@@ -80,6 +88,7 @@ class ExitCheckViewModel @JvmOverloads constructor(
             _state.value = ExitCheckUiState(
                 phase = ExitCheckPhase.DONE,
                 location = report.location,
+                place = report.place,
                 rows = CheckedService.entries.map {
                     it to (byService[it] ?: ServiceResult(it, ServiceVerdict.FAILED))
                 },

@@ -27,6 +27,7 @@ class ExitCheckHttp(
     data class Report(
         val location: ExitLocation?,
         val results: List<ServiceResult>,
+        val place: ExitPlace? = null,
     )
 
     private val client: OkHttpClient by lazy {
@@ -56,7 +57,7 @@ class ExitCheckHttp(
     fun run(): Report {
         val pool = Executors.newFixedThreadPool(8)
         try {
-            val location = pool.submit(Callable { lookupLocation() })
+            val locations = pool.submit(Callable { lookupLocations() })
             val checks = CheckedService.entries.map { s -> s to pool.submit(Callable { check(s) }) }
             val results = checks.map { (s, f) ->
                 try {
@@ -65,25 +66,42 @@ class ExitCheckHttp(
                     ServiceResult(s, ServiceVerdict.FAILED)
                 }
             }
-            val loc = try {
-                location.get(timeoutMs * 4, TimeUnit.MILLISECONDS)
+            val all = try {
+                locations.get(timeoutMs * 4, TimeUnit.MILLISECONDS)
             } catch (_: Exception) {
-                null
+                emptyList()
             }
-            return Report(loc, results)
+            return Report(all.firstOrNull(), results, ExitCheckLogic.consensus(all))
         } finally {
             pool.shutdownNow()
         }
     }
 
-    fun lookupLocation(): ExitLocation? {
-        for (url in ExitCheckLogic.LOCATION_URLS) {
-            val p = fetch(url, accept = "application/json") ?: continue
-            if (p.code !in 200..299) continue
-            ExitCheckLogic.parseLocation(p.body)?.let { return it }
+    /** Asks every database in [ExitCheckLogic.LOCATION_URLS] at once; returns those that answered. */
+    fun lookupLocations(): List<ExitLocation> {
+        val pool = Executors.newFixedThreadPool(ExitCheckLogic.LOCATION_URLS.size)
+        try {
+            val futures = ExitCheckLogic.LOCATION_URLS.map { url ->
+                pool.submit(Callable {
+                    fetch(url, accept = "application/json")
+                        ?.takeIf { it.code in 200..299 }
+                        ?.let { ExitCheckLogic.parseLocation(it.body) }
+                })
+            }
+            return futures.mapNotNull {
+                try {
+                    it.get(timeoutMs * 2, TimeUnit.MILLISECONDS)
+                } catch (_: Exception) {
+                    null
+                }
+            }
+        } finally {
+            pool.shutdownNow()
         }
-        return null
     }
+
+    /** Where this exit is, as the databases agree on it; null when none answered. */
+    fun lookupPlace(): ExitPlace? = ExitCheckLogic.consensus(lookupLocations())
 
     fun check(service: CheckedService): ServiceResult {
         val (verdict, latency) = when (service) {

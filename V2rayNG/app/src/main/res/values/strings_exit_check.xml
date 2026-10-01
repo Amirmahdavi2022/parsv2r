@@ -27,4 +27,8 @@
     <string name="exit_check_share_location">Exit:</string>
     <string name="exit_check_share_footer">Tested with ParsV2R\nt.me/parsv2r</string>
     <string name="exit_check_google">Google search</string>
+    <string name="exit_place_anycast">🌐 Unknown (Cloudflare)</string>
+    <string name="exit_place_unknown">🌐 Unknown</string>
+    <string name="exit_place_ip_changed">IP not fixed</string>
+    <string name="acc_exit_place">Exit location: %1$s</string>
 </resources>

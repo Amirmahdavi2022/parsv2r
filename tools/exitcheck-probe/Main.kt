@@ -23,6 +23,11 @@ fun main() {
     println()
     val report = http.run()
     println("LOCATION ${report.location}")
+    val all = http.lookupLocations()
+    all.forEach { println("SOURCE $it") }
+    val place = ExitCheckLogic.consensus(all)
+    println("PLACE $place")
+    println("LABEL ${ExitCheckLogic.placeLabel(place)}")
     println("FLAG ${ExitCheckLogic.flagEmoji(report.location?.countryCode)}")
     report.results.forEach { println("VERDICT ${it.service} ${it.verdict} ${it.latencyMs}ms") }
     println()

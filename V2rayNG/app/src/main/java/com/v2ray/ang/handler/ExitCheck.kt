@@ -18,7 +18,25 @@ data class ExitLocation(
     val country: String?,
     val countryCode: String?,
     val isp: String?,
+    val asn: Int? = null,
 )
+
+/**
+ * The location shown next to a config: what several independent IP databases agree on.
+ * [anycast] marks an exit that has no single place (Cloudflare and the like); it is shown
+ * as unknown instead of whatever city a database guessed for it.
+ */
+data class ExitPlace(
+    val ip: String?,
+    val countryCode: String?,
+    val city: String?,
+    val anycast: Boolean,
+    /** How many databases answered, and how many of them agree on the country shown. */
+    val sources: Int,
+    val agreeing: Int,
+) {
+    val known: Boolean get() = !anycast && countryCode != null
+}
 
 enum class ServiceVerdict {
     /** Opened normally. */
@@ -111,7 +129,79 @@ object ExitCheckLogic {
             country = countryName,
             countryCode = code,
             isp = isp,
+            asn = parseAsn(o, connection),
         )
+    }
+
+    private fun parseAsn(o: JsonObject, connection: JsonObject?): Int? {
+        fun num(e: JsonElement?): Int? =
+            if (e != null && e.isJsonPrimitive) e.asString.trim().removePrefix("AS").toIntOrNull() else null
+        return num(connection?.get("asn")) ?: num(o.get("asn"))
+            ?: o.str("org")?.let { Regex("^AS(\\d+)").find(it)?.groupValues?.get(1)?.toIntOrNull() }
+    }
+
+    /**
+     * Cloudflare's networks: 13335 is Cloudflare itself (CDN and most WARP exits), 209242 is
+     * Cloudflare's WARP egress network. An exit on these is anycast or shared, so a city for
+     * it says nothing about where the traffic really leaves.
+     */
+    val ANYCAST_ASNS = setOf(13335, 209242)
+
+    fun isAnycast(l: ExitLocation): Boolean =
+        (l.asn != null && l.asn in ANYCAST_ASNS) || l.isp?.contains("cloudflare", ignoreCase = true) == true
+
+    /**
+     * Combines the answers of several IP databases into one place:
+     * - any database seeing Cloudflare makes the exit anycast, shown as unknown;
+     * - a country is shown only when at least two databases agree on it (one database alone
+     *   is not trusted, since that is exactly how "fixed IP in Germany" ends up being elsewhere);
+     * - a city is added only when at least two of the databases that agree on the country
+     *   also agree on the city.
+     */
+    fun consensus(locations: List<ExitLocation>): ExitPlace? {
+        if (locations.isEmpty()) return null
+        val ip = locations.firstNotNullOfOrNull { it.ip }
+        if (locations.any { isAnycast(it) }) {
+            return ExitPlace(ip, null, null, anycast = true, sources = locations.size, agreeing = 0)
+        }
+        val byCountry = locations.filter { it.countryCode != null }.groupBy { it.countryCode!! }
+        val best = byCountry.maxByOrNull { it.value.size }
+        if (best == null || best.value.size < 2 || byCountry.count { it.value.size == best.value.size } > 1) {
+            return ExitPlace(ip, null, null, anycast = false, sources = locations.size, agreeing = best?.value?.size ?: 0)
+        }
+        val city = best.value.mapNotNull { it.city?.trim()?.takeIf { c -> c.isNotEmpty() } }
+            .groupBy { normalizeCity(it) }
+            .maxByOrNull { it.value.size }
+            ?.takeIf { it.value.size >= 2 }
+            ?.value?.groupingBy { it }?.eachCount()?.maxByOrNull { it.value }?.key
+        return ExitPlace(ip, best.key, city, anycast = false, sources = locations.size, agreeing = best.value.size)
+    }
+
+    /** "Frankfurt am Main" and "Frankfurt" are the same answer; so are case and accents. */
+    fun normalizeCity(c: String): String {
+        val plain = java.text.Normalizer.normalize(c.lowercase(), java.text.Normalizer.Form.NFD)
+            .replace(Regex("\\p{M}+"), "")
+        return plain.substringBefore(" am ").substringBefore(" (").substringBefore(",").trim()
+            .removeSuffix(" city").trim()
+    }
+
+    /** Short English country names for the badge, the way people say them. */
+    private val SHORT_COUNTRY = mapOf(
+        "US" to "USA", "GB" to "UK", "AE" to "UAE", "RU" to "Russia", "KR" to "South Korea",
+        "NL" to "Netherlands", "CZ" to "Czechia", "IR" to "Iran", "TR" to "Turkey",
+    )
+
+    fun countryLabel(code: String): String =
+        SHORT_COUNTRY[code.uppercase()]
+            ?: java.util.Locale("", code.uppercase()).getDisplayCountry(java.util.Locale.ENGLISH).ifBlank { code.uppercase() }
+
+    /** "🇩🇪 Germany · Frankfurt", or null when the place isn't known. */
+    fun placeLabel(p: ExitPlace?): String? {
+        if (p == null || !p.known) return null
+        val cc = p.countryCode!!
+        val country = countryLabel(cc)
+        val head = "${flagEmoji(cc)} $country".trim()
+        return if (p.city != null) "$head · ${p.city}" else head
     }
 
     /** "AS13335 Cloudflare, Inc." -> "Cloudflare, Inc." */
@@ -239,5 +329,38 @@ object ExitCheckLogic {
         val e: JsonElement = get(key) ?: return null
         if (!e.isJsonPrimitive) return null
         return e.asString.trim().takeIf { it.isNotEmpty() }
+    }
+}
+
+/** What is kept per config between checks (stored as JSON by ExitPlaceStore). */
+data class StoredPlace(
+    val ip: String? = null,
+    val countryCode: String? = null,
+    val city: String? = null,
+    val anycast: Boolean = false,
+    val checkedAt: Long = 0,
+    /** The exit IP was different on the previous check, so it is not a fixed IP. */
+    val ipChanged: Boolean = false,
+    val previousIp: String? = null,
+) {
+    fun toPlace(): ExitPlace = ExitPlace(ip, countryCode, city, anycast, sources = 0, agreeing = 0)
+
+    companion object {
+        /**
+         * The record after a new check. An IP change is remembered: once a config has shown two
+         * different exits it stays flagged, even if a later check lands on the old IP again.
+         */
+        fun next(previous: StoredPlace?, now: ExitPlace, at: Long): StoredPlace {
+            val changedNow = previous?.ip != null && now.ip != null && previous.ip != now.ip
+            return StoredPlace(
+                ip = now.ip,
+                countryCode = now.countryCode,
+                city = now.city,
+                anycast = now.anycast,
+                checkedAt = at,
+                ipChanged = changedNow || (previous?.ipChanged == true),
+                previousIp = if (changedNow) previous?.ip else previous?.previousIp,
+            )
+        }
     }
 }
