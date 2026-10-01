@@ -1,0 +1,54 @@
+job:    exitprobe
+commit: 15e269ff787efbb58b7bf62f77e3edc169249c5b
+run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/36915537770
+when:   2026-10-01T19:36:54Z
+
+---- last 400 lines ----
+okio 3.17.0
+RAW https://ipwho.is/ -> 200 final=https://ipwho.is/ cf-mitigated=null ms=1752 len=944
+    body: {     "ip": "132.196.36.82",     "success": true,     "type": "IPv4",     "continent": "North America",     "continent_code": "NA",     "country": "United States",     "country_code": "US",     "region": "Iowa",     "reg
+RAW https://ipinfo.io/json -> 200 final=https://ipinfo.io/json cf-mitigated=null ms=113 len=259
+    body: {   "ip": "132.196.36.82",   "city": "Des Moines",   "region": "Iowa",   "country": "US",   "loc": "41.6005,-93.6091",   "org": "AS8075 Microsoft Corporation",   "postal": "50309",   "timezone": "America/Chicago",   "rea
+RAW https://api.ip.sb/geoip -> 200 final=https://api.ip.sb/geoip cf-mitigated=null ms=1206 len=365
+    body: {"region":"Iowa","organization":"Microsoft Azure","region_code":"IA","isp":"Microsoft Azure","city":"Des Moines","asn_organization":"Microsoft Corporation","postal_code":"50307","asn":8075,"latitude":41.6015,"ip":"132.19
+RAW https://api.openai.com/compliance/cookie_requirements -> 200 final=https://api.openai.com/compliance/cookie_requirements cf-mitigated=null ms=167 len=38
+    body: {   "cookie_consent_required": false }
+RAW https://ios.chat.openai.com/ -> 403 final=https://ios.chat.openai.com/ cf-mitigated=null ms=132 len=77
+    body: {"cf_details":"Request is not allowed. Please try again later.", "type":"dc"}
+RAW https://claude.ai/ -> 403 final=https://claude.ai/login cf-mitigated=challenge ms=122 len=5649
+    body: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="robots" content="
+RAW https://www.google.com/search?q=parsv2r&hl=en -> 200 final=https://www.google.com/search?q=parsv2r&hl=en cf-mitigated=null ms=146 len=92838
+    body: <!DOCTYPE html><html lang="en"><head><title>Google Search</title><style>body{background-color:var(--xhUGwc)}</style><script nonce="x3qUNvXvJ0UPwBvdHvArWQ">window.google = window.google || {};window.google.c = window.goog
+RAW https://www.youtube.com/generate_204 -> 204 final=https://www.youtube.com/generate_204 cf-mitigated=null ms=111 len=0
+    body: 
+RAW https://www.instagram.com/ -> 200 final=https://www.instagram.com/ cf-mitigated=null ms=372 len=524288
+    body: <!DOCTYPE html><html class="_9dls touch _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel="icon" sizes="192x192" href="https://static.cdninstagr
+RAW https://telegram.org/ -> 200 final=https://telegram.org/ cf-mitigated=null ms=535 len=18313
+    body: <!DOCTYPE html> <html class="" data-theme="light">   <head>     <meta charset="utf-8">     <title>Telegram Messenger</title>     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <meta property="
+RAW https://api.binance.com/api/v3/ping -> 451 final=https://api.binance.com/api/v3/ping cf-mitigated=null ms=225 len=224
+    body: {   "code": 0,   "msg": "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received this message in error
+
+LOCATION ExitLocation(ip=132.196.36.82, city=Des Moines, region=Iowa, country=United States, countryCode=US, isp=Microsoft Corporation)
+FLAG 🇺🇸
+VERDICT CHATGPT OK 141ms
+VERDICT CLAUDE CAPTCHA 110ms
+VERDICT GOOGLE OK 68ms
+VERDICT YOUTUBE OK 10ms
+VERDICT INSTAGRAM OK 254ms
+VERDICT TELEGRAM OK 124ms
+VERDICT BINANCE BLOCKED 51ms
+
+Exit check
+Exit: 🇺🇸 Des Moines, United States
+
+✅ CHATGPT
+⚠️ CLAUDE
+✅ GOOGLE
+✅ YOUTUBE
+✅ INSTAGRAM
+✅ TELEGRAM
+⛔ BINANCE
+
+t.me/parsv2r
+
+---- gradle test reports ----
