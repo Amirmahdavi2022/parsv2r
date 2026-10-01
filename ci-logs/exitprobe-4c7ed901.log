@@ -1,0 +1,61 @@
+job:    exitprobe
+commit: 4c7ed90158ceb6bffc7904a0181a3c196da1cc3b
+run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/36915803544
+when:   2026-10-01T19:39:09Z
+
+---- last 400 lines ----
+okio 3.17.0
+RAW https://ipwho.is/ -> 200 final=https://ipwho.is/ cf-mitigated=null ms=1077 len=956
+    body: {     "ip": "68.220.59.119",     "success": true,     "type": "IPv4",     "continent": "North America",     "continent_code": "NA",     "country": "United States",     "country_code": "US",     "region": "California",   
+RAW https://ipinfo.io/json -> 200 final=https://ipinfo.io/json cf-mitigated=null ms=194 len=268
+    body: {   "ip": "68.220.59.119",   "city": "San Jose",   "region": "California",   "country": "US",   "loc": "37.3394,-121.8950",   "org": "AS8075 Microsoft Corporation",   "postal": "95110",   "timezone": "America/Los_Angeles
+RAW https://api.ip.sb/geoip -> 200 final=https://api.ip.sb/geoip cf-mitigated=null ms=1192 len=374
+    body: {"region":"California","organization":"Microsoft Azure","region_code":"CA","isp":"Microsoft Azure","city":"San Jose","asn_organization":"Microsoft Corporation","postal_code":"95141","asn":8075,"latitude":37.3388,"ip":"68
+RAW https://api.openai.com/compliance/cookie_requirements -> 200 final=https://api.openai.com/compliance/cookie_requirements cf-mitigated=null ms=187 len=38
+    body: {   "cookie_consent_required": false }
+RAW https://ios.chat.openai.com/ -> 403 final=https://ios.chat.openai.com/ cf-mitigated=null ms=75 len=77
+    body: {"cf_details":"Request is not allowed. Please try again later.", "type":"dc"}
+RAW https://claude.ai/ -> 403 final=https://claude.ai/login cf-mitigated=challenge ms=77 len=5649
+    body: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="robots" content="
+RAW https://www.google.com/search?q=parsv2r&hl=en -> 200 final=https://www.google.com/search?q=parsv2r&hl=en cf-mitigated=null ms=109 len=92905
+    body: <!DOCTYPE html><html lang="en"><head><title>Google Search</title><style>body{background-color:var(--xhUGwc)}</style><script nonce="P9jaryU032AbaufALng74Q">window.google = window.google || {};window.google.c = window.goog
+RAW https://www.youtube.com/generate_204 -> 204 final=https://www.youtube.com/generate_204 cf-mitigated=null ms=35 len=0
+    body: 
+RAW https://www.instagram.com/ -> 200 final=https://www.instagram.com/ cf-mitigated=null ms=320 len=524288
+    body: <!DOCTYPE html><html class="_9dls touch _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel="icon" sizes="192x192" href="https://static.cdninstagr
+RAW https://telegram.org/ -> 200 final=https://telegram.org/ cf-mitigated=null ms=752 len=18313
+    body: <!DOCTYPE html> <html class="" data-theme="light">   <head>     <meta charset="utf-8">     <title>Telegram Messenger</title>     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <meta property="
+RAW https://api.binance.com/api/v3/ping -> 451 final=https://api.binance.com/api/v3/ping cf-mitigated=null ms=43 len=224
+    body: {   "code": 0,   "msg": "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received this message in error
+
+LOCATION ExitLocation(ip=68.220.59.119, city=San Jose, region=California, country=United States, countryCode=US, isp=Microsoft Corporation)
+FLAG 🇺🇸
+VERDICT CHATGPT LIMITED 129ms
+VERDICT CLAUDE CAPTCHA 77ms
+VERDICT GOOGLE OK 68ms
+VERDICT YOUTUBE OK 3ms
+VERDICT INSTAGRAM OK 155ms
+VERDICT TELEGRAM OK 298ms
+VERDICT BINANCE BLOCKED 2ms
+
+Exit check
+Exit: 🇺🇸 San Jose, United States
+
+🟡 CHATGPT
+⚠️ CLAUDE
+✅ GOOGLE
+✅ YOUTUBE
+✅ INSTAGRAM
+✅ TELEGRAM
+⛔ BINANCE
+
+t.me/parsv2r
+---- unit tests (same file the app build runs) ----
+JUnit version 4.13.2
+..............
+Time: 0.045
+
+OK (14 tests)
+
+
+---- gradle test reports ----
