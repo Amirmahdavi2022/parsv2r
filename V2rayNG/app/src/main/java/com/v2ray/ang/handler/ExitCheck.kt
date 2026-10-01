@@ -131,14 +131,19 @@ object ExitCheckLogic {
         p.headers["cf-mitigated"]?.equals("challenge", ignoreCase = true) == true
 
     /**
-     * ChatGPT is judged on two answers, the same two signals the RegionRestrictionCheck
-     * script reads: the API's compliance endpoint says "unsupported_country" for a refused
-     * region, and the iOS app host serves a page mentioning a VPN when it refuses the IP.
+     * ChatGPT is judged on two answers, the signals the RegionRestrictionCheck script reads:
+     * the API's compliance endpoint says "unsupported_country" for a refused region, and the
+     * app host (ios.chat.openai.com) refuses VPN and datacenter IPs. One refusal of the two
+     * is LIMITED: the website may work while the app doesn't, or the reverse.
      */
     fun classifyChatGpt(compliance: ProbeResponse?, ios: ProbeResponse?): ServiceVerdict {
         if (compliance == null || ios == null) return ServiceVerdict.FAILED
         val apiRefused = compliance.body.contains("unsupported_country", ignoreCase = true)
-        val appRefused = ios.body.contains("VPN")
+        // Seen from a datacenter IP on 2026-10-01: 403 with
+        // {"cf_details":"Request is not allowed...","type":"dc"} -- the app refuses the IP
+        // while the API side still answers normally.
+        val appRefused = ios.body.contains("VPN") ||
+            (ios.code == 403 && ios.body.contains("cf_details"))
         return when {
             apiRefused && appRefused -> ServiceVerdict.BLOCKED
             apiRefused || appRefused -> ServiceVerdict.LIMITED

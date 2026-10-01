@@ -11,6 +11,7 @@ on:
     paths:
       - 'V2rayNG/app/src/main/java/com/v2ray/ang/handler/ExitCheck*.kt'
       - 'tools/exitcheck-probe/**'
+      - 'V2rayNG/app/src/test/java/com/v2ray/ang/handler/ExitCheck*.kt'
       - '.github/workflows/exitcheck-probe.yml'
 
 permissions:
@@ -49,6 +50,14 @@ jobs:
             kotlinc/bin/kotlinc $H/ExitCheck.kt $H/ExitCheckHttp.kt tools/exitcheck-probe/Main.kt \
               -cp $CP -include-runtime -d probe.jar
             java -cp probe.jar:$CP MainKt
+
+            echo "---- unit tests (same file the app build runs) ----"
+            curl -fsSL -o jars/junit.jar $M/junit/junit/4.13.2/junit-4.13.2.jar
+            curl -fsSL -o jars/hamcrest.jar $M/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar
+            TCP=$CP:jars/junit.jar:jars/hamcrest.jar
+            kotlinc/bin/kotlinc $H/ExitCheck.kt V2rayNG/app/src/test/java/com/v2ray/ang/handler/ExitCheckLogicTest.kt \
+              -cp $TCP -include-runtime -d tests.jar
+            java -cp tests.jar:$TCP org.junit.runner.JUnitCore com.v2ray.ang.handler.ExitCheckLogicTest
           } 2>&1 | tee build-log.txt
 
       - name: Save output
