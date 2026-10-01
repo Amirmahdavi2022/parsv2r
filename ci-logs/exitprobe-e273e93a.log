@@ -1,0 +1,72 @@
+job:    exitprobe
+commit: e273e93a5a3d188179243409d1da0586fb38c81a
+run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/36917572873
+when:   2026-10-01T19:53:37Z
+
+---- last 400 lines ----
+okio 3.17.0
+V2rayNG/app/src/main/java/com/v2ray/ang/handler/ExitCheck.kt:196:26: warning: 'constructor(p0: String!, p1: String!): Locale' is deprecated. Deprecated in Java.
+            ?: java.util.Locale("", code.uppercase()).getDisplayCountry(java.util.Locale.ENGLISH).ifBlank { code.uppercase() }
+                         ^^^^^^
+RAW https://ipwho.is/ -> 200 final=https://ipwho.is/ cf-mitigated=null ms=649 len=949
+    body: {     "ip": "4.242.196.77",     "success": true,     "type": "IPv4",     "continent": "North America",     "continent_code": "NA",     "country": "United States",     "country_code": "US",     "region": "Arizona",     "r
+RAW https://ipinfo.io/json -> 200 final=https://ipinfo.io/json cf-mitigated=null ms=185 len=259
+    body: {   "ip": "4.242.196.77",   "city": "Phoenix",   "region": "Arizona",   "country": "US",   "loc": "33.4484,-112.0740",   "org": "AS8075 Microsoft Corporation",   "postal": "85003",   "timezone": "America/Phoenix",   "rea
+RAW https://api.ip.sb/geoip -> 200 final=https://api.ip.sb/geoip cf-mitigated=null ms=247 len=365
+    body: {"region":"Arizona","organization":"Microsoft Azure","region_code":"AZ","isp":"Microsoft Azure","city":"Phoenix","asn_organization":"Microsoft Corporation","postal_code":"85001","asn":8075,"latitude":33.4532,"ip":"4.242.
+RAW https://api.openai.com/compliance/cookie_requirements -> 200 final=https://api.openai.com/compliance/cookie_requirements cf-mitigated=null ms=136 len=38
+    body: {   "cookie_consent_required": false }
+RAW https://ios.chat.openai.com/ -> 403 final=https://ios.chat.openai.com/ cf-mitigated=null ms=124 len=77
+    body: {"cf_details":"Request is not allowed. Please try again later.", "type":"dc"}
+RAW https://claude.ai/ -> 403 final=https://claude.ai/login cf-mitigated=challenge ms=110 len=5649
+    body: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="robots" content="
+RAW https://www.google.com/search?q=parsv2r&hl=en -> 200 final=https://www.google.com/search?q=parsv2r&hl=en cf-mitigated=null ms=80 len=92434
+    body: <!DOCTYPE html><html lang="en"><head><title>Google Search</title><style>body{background-color:var(--xhUGwc)}</style><script nonce="bpK1oLKxnRFfYVvH9WoyUg">window.google = window.google || {};window.google.c = window.goog
+RAW https://www.youtube.com/generate_204 -> 204 final=https://www.youtube.com/generate_204 cf-mitigated=null ms=31 len=0
+    body: 
+RAW https://www.instagram.com/ -> 200 final=https://www.instagram.com/ cf-mitigated=null ms=397 len=524288
+    body: <!DOCTYPE html><html class="_9dls touch _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel="icon" sizes="192x192" href="https://static.cdninstagr
+RAW https://telegram.org/ -> 200 final=https://telegram.org/ cf-mitigated=null ms=647 len=18313
+    body: <!DOCTYPE html> <html class="" data-theme="light">   <head>     <meta charset="utf-8">     <title>Telegram Messenger</title>     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <meta property="
+RAW https://api.binance.com/api/v3/ping -> 451 final=https://api.binance.com/api/v3/ping cf-mitigated=null ms=82 len=224
+    body: {   "code": 0,   "msg": "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received this message in error
+
+LOCATION ExitLocation(ip=4.242.196.77, city=Phoenix, region=Arizona, country=United States, countryCode=US, isp=Microsoft Corporation, asn=8075)
+SOURCE ExitLocation(ip=4.242.196.77, city=Phoenix, region=Arizona, country=United States, countryCode=US, isp=Microsoft Corporation, asn=8075)
+SOURCE ExitLocation(ip=4.242.196.77, city=Phoenix, region=Arizona, country=null, countryCode=US, isp=Microsoft Corporation, asn=8075)
+SOURCE ExitLocation(ip=4.242.196.77, city=Phoenix, region=Arizona, country=United States, countryCode=US, isp=Microsoft Azure, asn=8075)
+PLACE ExitPlace(ip=4.242.196.77, countryCode=US, city=Phoenix, anycast=false, sources=3, agreeing=3)
+LABEL 🇺🇸 USA · Phoenix
+FLAG 🇺🇸
+VERDICT CHATGPT LIMITED 140ms
+VERDICT CLAUDE CAPTCHA 143ms
+VERDICT GOOGLE OK 52ms
+VERDICT YOUTUBE OK 4ms
+VERDICT INSTAGRAM OK 208ms
+VERDICT TELEGRAM OK 216ms
+VERDICT BINANCE BLOCKED 37ms
+
+Exit check
+Exit: 🇺🇸 Phoenix, United States
+
+🟡 CHATGPT
+⚠️ CLAUDE
+✅ GOOGLE
+✅ YOUTUBE
+✅ INSTAGRAM
+✅ TELEGRAM
+⛔ BINANCE
+
+t.me/parsv2r
+---- unit tests (same file the app build runs) ----
+V2rayNG/app/src/main/java/com/v2ray/ang/handler/ExitCheck.kt:196:26: warning: 'constructor(p0: String!, p1: String!): Locale' is deprecated. Deprecated in Java.
+            ?: java.util.Locale("", code.uppercase()).getDisplayCountry(java.util.Locale.ENGLISH).ifBlank { code.uppercase() }
+                         ^^^^^^
+JUnit version 4.13.2
+..........................
+Time: 0.097
+
+OK (26 tests)
+
+
+---- gradle test reports ----
