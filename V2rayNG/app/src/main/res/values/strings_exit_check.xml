@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="exit_check_title">Exit check</string>
+    <string name="exit_check_locating">Finding where you come out…</string>
+    <string name="exit_check_exit_label">Your exit</string>
+    <string name="exit_check_unknown_city">City unknown</string>
+    <string name="exit_check_ip">IP</string>
+    <string name="exit_check_copy_ip">Copy IP</string>
+    <string name="exit_check_copied">Copied</string>
+    <string name="exit_check_services">Services through this config</string>
+    <string name="exit_check_run_again">Test again</string>
+    <string name="exit_check_share">Share result</string>
+    <string name="exit_check_note">The city comes from the exit IP and is an estimate. Services are tested through the same route your apps use.</string>
+    <string name="exit_check_not_connected_title">Connect first</string>
+    <string name="exit_check_not_connected_body">Connect a config, then open this page to see where it comes out and what opens through it.</string>
+    <string name="exit_check_dynamic_port">\"Enable dynamic local proxy port\" is on in Settings. This check needs a fixed port, so turn it off and connect again.</string>
+    <string name="exit_check_no_traffic_title">No traffic through this config</string>
+    <string name="exit_check_no_traffic_body">Nothing answered through the connection. The config may be connected but not carrying data.</string>
+    <string name="exit_check_verdict_ok">Works</string>
+    <string name="exit_check_verdict_blocked">Blocked for this region</string>
+    <string name="exit_check_verdict_limited">Partly</string>
+    <string name="exit_check_verdict_captcha">Captcha / security check</string>
+    <string name="exit_check_verdict_failed">Didn\'t open</string>
+    <string name="exit_check_verdict_testing">Testing…</string>
+    <string name="exit_check_ms">%1$d ms</string>
+    <string name="exit_check_share_header">Where my config comes out and what opens through it:</string>
+    <string name="exit_check_share_location">Exit:</string>
+    <string name="exit_check_share_footer">Tested with ParsV2R\nt.me/parsv2r</string>
+    <string name="exit_check_google">Google search</string>
+</resources>

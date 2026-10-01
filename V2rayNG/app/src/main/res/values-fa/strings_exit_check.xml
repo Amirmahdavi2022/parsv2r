@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="exit_check_title">بررسی خروجی</string>
+    <string name="exit_check_locating">دارم پیدا می‌کنم از کجا خارج میشی…</string>
+    <string name="exit_check_exit_label">خروجی تو</string>
+    <string name="exit_check_unknown_city">شهر نامشخص</string>
+    <string name="exit_check_ip">آی‌پی</string>
+    <string name="exit_check_copy_ip">کپی آی‌پی</string>
+    <string name="exit_check_copied">کپی شد</string>
+    <string name="exit_check_services">سرویس‌ها با این کانفیگ</string>
+    <string name="exit_check_run_again">تست دوباره</string>
+    <string name="exit_check_share">اشتراک نتیجه</string>
+    <string name="exit_check_note">شهر از روی آی‌پی خروجی تخمین زده میشه و ممکنه دقیق نباشه. سرویس‌ها از همون مسیری تست میشن که برنامه‌هات ازش رد میشن.</string>
+    <string name="exit_check_not_connected_title">اول وصل شو</string>
+    <string name="exit_check_not_connected_body">یه کانفیگ وصل کن، بعد این صفحه رو باز کن تا ببینی از کجا خارج میشی و چی برات باز میشه.</string>
+    <string name="exit_check_dynamic_port">گزینه «تولید پورت متغیر برای پروکسی محلی» تو تنظیمات روشنه. این تست با پورت ثابت کار می‌کنه، خاموشش کن و دوباره وصل شو.</string>
+    <string name="exit_check_no_traffic_title">از این کانفیگ ترافیک رد نمیشه</string>
+    <string name="exit_check_no_traffic_body">هیچ جوابی از مسیر اتصال نیومد. احتمالاً کانفیگ وصل نشون میده ولی داده رد نمی‌کنه.</string>
+    <string name="exit_check_verdict_ok">باز میشه</string>
+    <string name="exit_check_verdict_blocked">برای این منطقه بسته‌ست</string>
+    <string name="exit_check_verdict_limited">نصفه‌نیمه</string>
+    <string name="exit_check_verdict_captcha">کپچا / بررسی امنیتی</string>
+    <string name="exit_check_verdict_failed">باز نشد</string>
+    <string name="exit_check_verdict_testing">در حال تست…</string>
+    <string name="exit_check_ms">%1$d میلی‌ثانیه</string>
+    <string name="exit_check_share_header">کانفیگم از کجا خارج میشه و چی باهاش باز میشه:</string>
+    <string name="exit_check_share_location">خروجی:</string>
+    <string name="exit_check_share_footer">تست شده با ParsV2R\nt.me/parsv2r</string>
+    <string name="exit_check_google">جستجوی گوگل</string>
+</resources>

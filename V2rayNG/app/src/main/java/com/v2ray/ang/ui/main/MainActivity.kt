@@ -28,6 +28,7 @@ import com.v2ray.ang.ui.AboutActivity
 import com.v2ray.ang.ui.backup.BackupActivity
 import com.v2ray.ang.ui.base.HelperBaseComponentActivity
 import com.v2ray.ang.ui.checkupdate.CheckUpdateActivity
+import com.v2ray.ang.ui.exitcheck.ExitCheckActivity
 import com.v2ray.ang.ui.logcat.LogcatActivity
 import com.v2ray.ang.ui.perappproxy.PerAppProxyActivity
 import com.v2ray.ang.ui.routing.RoutingSettingActivity
@@ -139,6 +140,8 @@ class MainActivity : HelperBaseComponentActivity() {
 
     private fun navigateTo(destination: MainDestination) {
         val intent = when (destination) {
+            MainDestination.ExitCheck -> Intent(this, ExitCheckActivity::class.java)
+                .putExtra(ExitCheckActivity.EXTRA_CONNECTED, mainViewModel.uiState.value.isRunning)
             MainDestination.Subscriptions -> Intent(this, SubSettingActivity::class.java)
             MainDestination.PerAppProxy -> Intent(this, PerAppProxyActivity::class.java)
             MainDestination.Routing -> Intent(this, RoutingSettingActivity::class.java)
