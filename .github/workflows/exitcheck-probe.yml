@@ -1,0 +1,58 @@
+name: Exit check probe
+
+# Compiles the app's exit-check files with plain kotlinc and runs them against the live
+# services from the runner, then saves the output on the ci-logs branch. Cheap (no Android
+# SDK, no native builds) and it is the only place those checks can meet the real services.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [exit-check]
+    paths:
+      - 'V2rayNG/app/src/main/java/com/v2ray/ang/handler/ExitCheck*.kt'
+      - 'tools/exitcheck-probe/**'
+      - '.github/workflows/exitcheck-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6.0.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Compile and run
+        run: |
+          set -o pipefail
+          {
+            set -e
+            KV=2.2.20
+            curl -fsSL -o kc.zip "https://github.com/JetBrains/kotlin/releases/download/v$KV/kotlin-compiler-$KV.zip"
+            unzip -q kc.zip
+            M=https://repo1.maven.org/maven2
+            mkdir -p jars
+            curl -fsSL -o jars/gson.jar  $M/com/google/code/gson/gson/2.14.0/gson-2.14.0.jar
+            curl -fsSL -o jars/okhttp.jar $M/com/squareup/okhttp3/okhttp-jvm/5.4.0/okhttp-jvm-5.4.0.jar
+            # okhttp's own pom names the okio it was built against
+            OKIO=$(curl -fsSL $M/com/squareup/okhttp3/okhttp-jvm/5.4.0/okhttp-jvm-5.4.0.pom \
+              | tr -d '\n ' | grep -oE '<artifactId>okio(-jvm)?</artifactId><version>[^<]*' | head -1 | sed 's/.*<version>//')
+            echo "okio $OKIO"
+            curl -fsSL -o jars/okio.jar  $M/com/squareup/okio/okio-jvm/$OKIO/okio-jvm-$OKIO.jar
+            CP=jars/gson.jar:jars/okhttp.jar:jars/okio.jar
+            H=V2rayNG/app/src/main/java/com/v2ray/ang/handler
+            kotlinc/bin/kotlinc $H/ExitCheck.kt $H/ExitCheckHttp.kt tools/exitcheck-probe/Main.kt \
+              -cp $CP -include-runtime -d probe.jar
+            java -cp probe.jar:$CP MainKt
+          } 2>&1 | tee build-log.txt
+
+      - name: Save output
+        if: always()
+        uses: ./.github/actions/publish-log
+        with:
+          name: exitprobe
