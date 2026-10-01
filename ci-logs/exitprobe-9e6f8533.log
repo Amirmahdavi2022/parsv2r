@@ -1,0 +1,84 @@
+job:    exitprobe
+commit: 9e6f853326377e132082c21cb0054861a6093d62
+run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/36917824956
+when:   2026-10-01T19:55:48Z
+
+---- last 400 lines ----
+okio 3.17.0
+V2rayNG/app/src/main/java/com/v2ray/ang/handler/ExitCheck.kt:196:26: warning: 'constructor(p0: String!, p1: String!): Locale' is deprecated. Deprecated in Java.
+            ?: java.util.Locale("", code.uppercase()).getDisplayCountry(java.util.Locale.ENGLISH).ifBlank { code.uppercase() }
+                         ^^^^^^
+RAW https://ipwho.is/ -> 200 final=https://ipwho.is/ cf-mitigated=null ms=747 len=945
+    body: {     "ip": "48.217.227.93",     "success": true,     "type": "IPv4",     "continent": "North America",     "continent_code": "NA",     "country": "United States",     "country_code": "US",     "region": "Virginia",     
+RAW https://ipinfo.io/json -> 200 final=https://ipinfo.io/json cf-mitigated=null ms=121 len=272
+    body: {   "ip": "48.217.227.93",   "city": "Dulles Town Center",   "region": "Virginia",   "country": "US",   "loc": "39.0376,-77.4158",   "org": "AS8075 Microsoft Corporation",   "postal": "20164",   "timezone": "America/New_
+RAW https://api.ip.sb/geoip -> 200 final=https://api.ip.sb/geoip cf-mitigated=null ms=454 len=366
+    body: {"region":"Virginia","organization":"Microsoft Azure","region_code":"VA","isp":"Microsoft Azure","city":"Dulles","asn_organization":"Microsoft Corporation","postal_code":"20189","asn":8075,"latitude":39.0367,"ip":"48.217
+RAW https://api.openai.com/compliance/cookie_requirements -> 200 final=https://api.openai.com/compliance/cookie_requirements cf-mitigated=null ms=120 len=38
+    body: {   "cookie_consent_required": false }
+RAW https://ios.chat.openai.com/ -> 403 final=https://ios.chat.openai.com/ cf-mitigated=null ms=101 len=77
+    body: {"cf_details":"Request is not allowed. Please try again later.", "type":"dc"}
+RAW https://claude.ai/ -> 403 final=https://claude.ai/login cf-mitigated=challenge ms=102 len=5649
+    body: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="robots" content="
+RAW https://www.google.com/search?q=parsv2r&hl=en -> 200 final=https://www.google.com/search?q=parsv2r&hl=en cf-mitigated=null ms=87 len=92561
+    body: <!DOCTYPE html><html lang="en"><head><title>Google Search</title><style>body{background-color:var(--xhUGwc)}</style><script nonce="FLbsDHx5vsLsNbxl2Wk9pw">window.google = window.google || {};window.google.c = window.goog
+RAW https://www.youtube.com/generate_204 -> 204 final=https://www.youtube.com/generate_204 cf-mitigated=null ms=28 len=0
+    body: 
+RAW https://www.instagram.com/ -> 200 final=https://www.instagram.com/ cf-mitigated=null ms=289 len=524288
+    body: <!DOCTYPE html><html class="_9dls touch _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel="icon" sizes="192x192" href="https://static.cdninstagr
+RAW https://telegram.org/ -> 200 final=https://telegram.org/ cf-mitigated=null ms=464 len=18313
+    body: <!DOCTYPE html> <html class="" data-theme="light">   <head>     <meta charset="utf-8">     <title>Telegram Messenger</title>     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <meta property="
+RAW https://api.binance.com/api/v3/ping -> 451 final=https://api.binance.com/api/v3/ping cf-mitigated=null ms=121 len=224
+    body: {   "code": 0,   "msg": "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received this message in error
+
+LOCATION ExitLocation(ip=48.217.227.93, city=Dulles, region=Virginia, country=United States, countryCode=US, isp=Microsoft Corporation, asn=8075)
+SOURCE ExitLocation(ip=48.217.227.93, city=Dulles, region=Virginia, country=United States, countryCode=US, isp=Microsoft Corporation, asn=8075)
+SOURCE ExitLocation(ip=48.217.227.93, city=Dulles Town Center, region=Virginia, country=null, countryCode=US, isp=Microsoft Corporation, asn=8075)
+SOURCE ExitLocation(ip=48.217.227.93, city=Dulles, region=Virginia, country=United States, countryCode=US, isp=Microsoft Azure, asn=8075)
+PLACE ExitPlace(ip=48.217.227.93, countryCode=US, city=Dulles, anycast=false, sources=3, agreeing=3)
+LABEL 🇺🇸 USA · Dulles
+  104.16.132.229 SOURCE ExitLocation(ip=104.16.132.229, city=San Francisco, region=California, country=United States, countryCode=US, isp=Cloudflare, Inc., asn=13335)
+  104.16.132.229 SOURCE ExitLocation(ip=104.16.132.229, city=San Francisco, region=California, country=null, countryCode=US, isp=Cloudflare, Inc., asn=13335)
+  104.16.132.229 SOURCE ExitLocation(ip=104.16.132.229, city=null, region=null, country=null, countryCode=US, isp=Cloudflare, asn=13335)
+BYIP 104.16.132.229 -> ExitPlace(ip=104.16.132.229, countryCode=null, city=null, anycast=true, sources=3, agreeing=0) label=null
+  104.28.226.1 SOURCE ExitLocation(ip=104.28.226.1, city=Almaty, region=Almaty, country=Kazakhstan, countryCode=KZ, isp=Cloudflare, Inc., asn=13335)
+  104.28.226.1 SOURCE ExitLocation(ip=104.28.226.1, city=Almaty, region=Almaty, country=null, countryCode=KZ, isp=Cloudflare, Inc., asn=13335)
+  104.28.226.1 SOURCE ExitLocation(ip=104.28.226.1, city=Almaty, region=Almaty, country=Kazakhstan, countryCode=KZ, isp=Cloudflare Warp, asn=13335)
+BYIP 104.28.226.1 -> ExitPlace(ip=104.28.226.1, countryCode=null, city=null, anycast=true, sources=3, agreeing=0) label=null
+  8.8.8.8 SOURCE ExitLocation(ip=8.8.8.8, city=San Jose, region=California, country=United States, countryCode=US, isp=Google LLC, asn=15169)
+  8.8.8.8 SOURCE ExitLocation(ip=8.8.8.8, city=Mountain View, region=California, country=null, countryCode=US, isp=Google LLC, asn=15169)
+  8.8.8.8 SOURCE ExitLocation(ip=8.8.8.8, city=Mountain View, region=California, country=United States, countryCode=US, isp=Google, asn=15169)
+BYIP 8.8.8.8 -> ExitPlace(ip=8.8.8.8, countryCode=US, city=Mountain View, anycast=false, sources=3, agreeing=3) label=🇺🇸 USA · Mountain View
+FLAG 🇺🇸
+VERDICT CHATGPT LIMITED 124ms
+VERDICT CLAUDE CAPTCHA 90ms
+VERDICT GOOGLE OK 47ms
+VERDICT YOUTUBE OK 7ms
+VERDICT INSTAGRAM OK 251ms
+VERDICT TELEGRAM OK 105ms
+VERDICT BINANCE BLOCKED 4ms
+
+Exit check
+Exit: 🇺🇸 Dulles, United States
+
+🟡 CHATGPT
+⚠️ CLAUDE
+✅ GOOGLE
+✅ YOUTUBE
+✅ INSTAGRAM
+✅ TELEGRAM
+⛔ BINANCE
+
+t.me/parsv2r
+---- unit tests (same file the app build runs) ----
+V2rayNG/app/src/main/java/com/v2ray/ang/handler/ExitCheck.kt:196:26: warning: 'constructor(p0: String!, p1: String!): Locale' is deprecated. Deprecated in Java.
+            ?: java.util.Locale("", code.uppercase()).getDisplayCountry(java.util.Locale.ENGLISH).ifBlank { code.uppercase() }
+                         ^^^^^^
+JUnit version 4.13.2
+..........................
+Time: 0.098
+
+OK (26 tests)
+
+
+---- gradle test reports ----
