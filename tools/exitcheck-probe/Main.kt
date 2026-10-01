@@ -28,6 +28,14 @@ fun main() {
     val place = ExitCheckLogic.consensus(all)
     println("PLACE $place")
     println("LABEL ${ExitCheckLogic.placeLabel(place)}")
+    // A Cloudflare CDN address and a WARP egress address, looked up by IP, must come out anycast.
+    for (ip in listOf("104.16.132.229", "104.28.226.1", "8.8.8.8")) {
+        val locs = listOf("https://ipwho.is/$ip", "https://ipinfo.io/$ip/json", "https://api.ip.sb/geoip/$ip")
+            .mapNotNull { u -> http.fetch(u, accept = "application/json")?.takeIf { it.code in 200..299 }?.let { ExitCheckLogic.parseLocation(it.body) } }
+        locs.forEach { println("  $ip SOURCE $it") }
+        val p = ExitCheckLogic.consensus(locs)
+        println("BYIP $ip -> $p label=${ExitCheckLogic.placeLabel(p)}")
+    }
     println("FLAG ${ExitCheckLogic.flagEmoji(report.location?.countryCode)}")
     report.results.forEach { println("VERDICT ${it.service} ${it.verdict} ${it.latencyMs}ms") }
     println()
