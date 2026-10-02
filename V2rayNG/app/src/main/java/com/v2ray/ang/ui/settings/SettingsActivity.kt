@@ -130,6 +130,7 @@ fun SettingsScreen(
     var muxXudpQuic by rememberMmkvString(AppConfig.PREF_MUX_XUDP_QUIC, "reject")
 
     var fragment by rememberMmkvBool(AppConfig.PREF_FRAGMENT_ENABLED, false)
+    var revive by rememberMmkvBool(AppConfig.PREF_REVIVE_ENABLED, false)
     var fragmentPackets by rememberMmkvString(AppConfig.PREF_FRAGMENT_PACKETS, "tlshello")
     var fragmentLength by rememberMmkvString(AppConfig.PREF_FRAGMENT_LENGTH, "50-100")
     var fragmentInterval by rememberMmkvString(AppConfig.PREF_FRAGMENT_INTERVAL, "10-20")
@@ -242,6 +243,12 @@ fun SettingsScreen(
                 summary = stringResource(R.string.summary_pref_show_advanced_settings),
                 checked = showAdvancedSettings,
                 onCheckedChange = { showAdvancedSettings = it }
+            )
+            SettingsSwitchItem(
+                title = stringResource(R.string.title_pref_revive_enabled),
+                summary = stringResource(R.string.summary_pref_revive_enabled),
+                checked = revive,
+                onCheckedChange = { revive = it }
             )
 
             CollapsiblePreferenceGroupHeader(

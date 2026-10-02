@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_pref_revive_enabled">احیای کانفیگ‌های کلادفلری</string>
+    <string name="summary_pref_revive_enabled">دست دادن TLS را تکه‌تکه می‌فرستد و لیست رمز سفارشی را روی همه‌ی کانفیگ‌های TLS (VLESS، VMess، Trojan) که Final Mask خودشان را ندارند اعمال می‌کند. بعد از تغییر، یک بار قطع و وصل کنید.</string>
+    <string name="action_fill_revive_preset">پر کردن تنظیمات احیا</string>
+</resources>

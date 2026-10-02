@@ -1,0 +1,110 @@
+name: Revive preset probe
+
+# Builds the xray-core the app actually ships (patterniha fork, pinned by AndroidLibXrayLite's
+# go.mod), then:
+#   1. `xray run -test` on a VLESS+WS+TLS outbound carrying the preset's final mask and cipher list,
+#   2. a live HTTPS fetch through it with tcpdump, counting how many pieces the TLS ClientHello
+#      really leaves the runner in, with and without the mask.
+# Output goes to the ci-logs branch.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [revive-preset]
+    paths:
+      - 'V2rayNG/app/src/main/java/com/v2ray/ang/handler/RevivePreset.kt'
+      - '.github/workflows/revive-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build xray and probe
+        run: |
+          set -o pipefail
+          {
+            set -e
+            ALX=$(git ls-tree HEAD AndroidLibXrayLite | awk '{print $3}')
+            echo "AndroidLibXrayLite pin: $ALX"
+            curl -fsSL "https://raw.githubusercontent.com/patterniha/AndroidLibXrayLite/$ALX/go.mod" -o alx.go.mod
+            REPL=$(grep -E '^replace github.com/xtls/xray-core' alx.go.mod)
+            echo "$REPL"
+            REPO=$(echo "$REPL" | awk '{print $4}')
+            PSEUDO=$(echo "$REPL" | awk '{print $5}')
+            SHA=${PSEUDO##*-}
+            git clone -q "https://$REPO" xc && git -C xc checkout -q "$SHA"
+            echo "xray-core: $REPO @ $SHA"
+            GOV=$(grep -m1 -E '^go ' xc/go.mod | awk '{print $2}')
+            echo "go $GOV"
+            echo "GOV=$GOV" >> "$GITHUB_ENV"
+          } 2>&1 | tee build-log.txt
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version: ${{ env.GOV }}
+
+      - name: Test config and live fetch
+        run: |
+          set -o pipefail
+          {
+            set -e
+            (cd xc && CGO_ENABLED=0 go build -o ../xray ./main)
+            ./xray version | head -1
+
+            MASK=$(sed -n '/const val FINAL_MASK =/,/"]}"/p' V2rayNG/app/src/main/java/com/v2ray/ang/handler/RevivePreset.kt \
+              | grep -o '"[^"]*\(\\"[^"]*\)*"' | sed 's/^"//; s/"$//' | tr -d '\n' | sed 's/\\"/"/g')
+            CS=$(sed -n '/const val CIPHER_SUITES =/,/SHA256"$/p' V2rayNG/app/src/main/java/com/v2ray/ang/handler/RevivePreset.kt \
+              | grep -o '"[^"]*"' | tr -d '"\n')
+            echo "mask: $MASK"
+            echo "ciphers: $CS"
+            echo "$MASK" | python3 -m json.tool > /dev/null
+
+            echo "==== 1. xray run -test on a VLESS+WS+TLS outbound ===="
+            cat > vless.json <<EOF
+          {"log":{"loglevel":"warning"},
+           "inbounds":[{"port":10808,"listen":"127.0.0.1","protocol":"socks"}],
+           "outbounds":[{"protocol":"vless","settings":{"vnext":[{"address":"example.com","port":443,
+             "users":[{"id":"11111111-1111-1111-1111-111111111111","encryption":"none"}]}]},
+             "streamSettings":{"network":"ws","security":"tls",
+               "tlsSettings":{"serverName":"example.com","cipherSuites":"$CS"},
+               "wsSettings":{"path":"/"},
+               "finalmask":$MASK}}]}
+          EOF
+            ./xray run -test -c vless.json
+
+            echo "==== 2. live HTTPS fetch, ClientHello pieces counted ===="
+            run_case () {
+              NAME=$1; SS=$2
+              cat > live.json <<EOF
+          {"log":{"loglevel":"warning"},
+           "inbounds":[{"port":10809,"listen":"127.0.0.1","protocol":"socks"}],
+           "outbounds":[{"protocol":"freedom","streamSettings":$SS}]}
+          EOF
+              ./xray run -c live.json > xray-$NAME.log 2>&1 & XP=$!
+              sleep 2
+              sudo tcpdump -i any -nn -U -w $NAME.pcap 'tcp port 443' 2>/dev/null & TP=$!
+              sleep 2
+              CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 --socks5-hostname 127.0.0.1:10809 https://www.cloudflare.com/cdn-cgi/trace || true)
+              sleep 2
+              sudo kill $TP; kill $XP; sleep 1
+              echo "-- $NAME: http $CODE"
+              # client->server data packets before the first server data packet
+              sudo tcpdump -nn -r $NAME.pcap 2>/dev/null | awk '
+                / > [0-9.]+\.443: / && /length [1-9]/ { if (!srv) { n++; printf "  out #%d %s\n", n, $NF } }
+                /\.443 > / && /length [1-9]/ { srv=1 }
+                END { print "  pieces before the server answered: " n+0 }'
+            }
+            run_case baseline '{}'
+            run_case revive "{\"finalmask\":$MASK}"
+          } 2>&1 | tee -a build-log.txt
+
+      - name: Save output
+        if: always()
+        uses: ./.github/actions/publish-log
+        with:
+          name: reviveprobe

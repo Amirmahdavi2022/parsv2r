@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_pref_revive_enabled">Revive Cloudflare configs</string>
+    <string name="summary_pref_revive_enabled">Splits the TLS handshake into small pieces and uses a custom cipher list on every TLS config (VLESS, VMess, Trojan) that has no Final Mask of its own. Reconnect after changing it.</string>
+    <string name="action_fill_revive_preset">Fill revive preset</string>
+</resources>

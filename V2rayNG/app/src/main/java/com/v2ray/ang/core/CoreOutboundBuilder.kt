@@ -10,6 +10,7 @@ import com.v2ray.ang.enums.NetworkType
 import com.v2ray.ang.extension.isNotNullEmpty
 import com.v2ray.ang.extension.nullIfBlank
 import com.v2ray.ang.handler.MmkvManager
+import com.v2ray.ang.handler.RevivePreset
 import com.v2ray.ang.util.HttpUtil
 import com.v2ray.ang.util.JsonUtil
 import com.v2ray.ang.util.LogUtil
@@ -577,12 +578,18 @@ object CoreOutboundBuilder {
 
         streamSettings.security = streamSecurity.nullIfBlank()
         if (streamSettings.security == null) return
+        val revive = RevivePreset.appliesTo(
+            enabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_REVIVE_ENABLED, false),
+            configType = profileItem.configType,
+            security = streamSettings.security,
+            ownFinalMask = profileItem.finalMask,
+        )
         val tlsSetting = OutboundBean.StreamSettingsBean.TlsSettingsBean(
             allowInsecure = allowInsecure,
             serverName = sni.nullIfBlank(),
             fingerprint = profileItem.fingerPrint.nullIfBlank(),
             alpn = profileItem.alpn?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }.takeIf { !it.isNullOrEmpty() },
-            cipherSuites = profileItem.cipherSuites.nullIfBlank(),
+            cipherSuites = if (revive) RevivePreset.cipherSuitesFor(profileItem.cipherSuites) else profileItem.cipherSuites.nullIfBlank(),
             echConfigList = profileItem.echConfigList.nullIfBlank(),
             verifyPeerCertByName = profileItem.verifyPeerCertByName.nullIfBlank(),
             pinnedPeerCertSha256 = profileItem.pinnedCA256.nullIfBlank(),
@@ -599,7 +606,10 @@ object CoreOutboundBuilder {
             streamSettings.realitySettings = tlsSetting
         }
 
-        if (profileItem.finalMask.isNullOrEmpty()) {
+        if (revive) {
+            // The preset replaces the older single-mask fragment setting for this outbound.
+            streamSettings.finalmask = JsonUtil.parseString(RevivePreset.FINAL_MASK)
+        } else if (profileItem.finalMask.isNullOrEmpty()) {
             updateOutboundFragment(streamSettings)
         }
     }

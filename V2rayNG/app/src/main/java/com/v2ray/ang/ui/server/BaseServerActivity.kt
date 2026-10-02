@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -28,6 +29,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.v2ray.ang.handler.RevivePreset
 import com.v2ray.ang.AppConfig.REALITY
 import com.v2ray.ang.AppConfig.TLS
 import com.v2ray.ang.R
@@ -304,6 +306,14 @@ abstract class BaseServerActivity : BaseComponentActivity() {
                     state.cipherSuites,
                     { state.cipherSuites = it }
                 )
+                if (state.configType in REVIVE_TYPES) {
+                    OutlinedButton(onClick = {
+                        state.finalMask = RevivePreset.FINAL_MASK
+                        state.cipherSuites = RevivePreset.CIPHER_SUITES
+                    }) {
+                        Text(stringResource(R.string.action_fill_revive_preset))
+                    }
+                }
                 FormTextField(
                     stringResource(R.string.server_lab_ech_config_list),
                     state.echConfigList,
@@ -527,3 +537,5 @@ abstract class BaseServerActivity : BaseComponentActivity() {
         }
     }
 }
+
+private val REVIVE_TYPES = setOf(EConfigType.VLESS, EConfigType.VMESS, EConfigType.TROJAN)
