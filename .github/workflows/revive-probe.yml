@@ -5,7 +5,9 @@ name: Revive preset probe
 #   1. `xray run -test` on a VLESS+WS+TLS outbound carrying the preset's final mask and cipher list,
 #   2. a live HTTPS fetch through it with tcpdump, counting how many pieces the TLS ClientHello
 #      really leaves the runner in, with and without the mask.
-# Output goes to the ci-logs branch.
+# Output goes to the ci-logs branch. Measured 2026-10-02: without the mask the ClientHello leaves
+# as one 517-byte packet; with it, 114 bytes then single bytes ~1 ms apart, and the fetch still
+# returns 200.
 
 on:
   workflow_dispatch:
@@ -93,13 +95,16 @@ jobs:
               sleep 2
               sudo kill $TP; kill $XP; sleep 1
               echo "-- $NAME: http $CODE"
-              echo "  raw (first 40 lines):"
-              sudo tcpdump -nn -r $NAME.pcap 2>/dev/null | head -40 | sed 's/^/    /'
-              # client->server data packets before the first server data packet
-              sudo tcpdump -nn -r $NAME.pcap 2>/dev/null | awk '
-                / > [0-9.]+\.443: / && /length [1-9]/ { if (!srv) { n++; printf "  out #%d %s\n", n, $NF } }
-                /\.443 > / && /length [1-9]/ { srv=1 }
-                END { print "  pieces before the server answered: " n+0 }'
+              echo "  client->server packets carrying data, before the first server data packet:"
+              sudo tcpdump -nn -r $NAME.pcap -i eth0 2>/dev/null > $NAME.txt || true
+              grep -v ' enP' $NAME.txt | python3 -c "
+          import sys,re
+          for l in sys.stdin:
+              m=re.search(r'length (\d+)',l)
+              if not m or m.group(1)=='0': continue
+              if '.443 >' in l: break
+              print('    ', l.split()[0], 'length', m.group(1))
+          " || true
             }
             run_case baseline '{}'
             run_case revive "{\"finalmask\":$MASK}"
