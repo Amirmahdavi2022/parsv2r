@@ -1,0 +1,75 @@
+job:    reviveprobe
+commit: 238bbe129300ad239e98a19bfa4019c0777c954f
+run:    https://github.com/Amirmahdavi2022/parsv2r/actions/runs/36997702578
+when:   2026-10-02T10:51:45Z
+
+---- last 400 lines ----
+AndroidLibXrayLite pin: fb6545fb939463e8bf87696022960ed3a6db80f0
+replace github.com/xtls/xray-core => github.com/patterniha/xray-core v0.0.0-20260913140436-67191ffced1a
+xray-core: github.com/patterniha/xray-core @ 67191ffced1a
+go 1.27
+go: downloading google.golang.org/protobuf v1.36.12
+go: downloading google.golang.org/grpc v1.83.2
+go: downloading github.com/apernet/quic-go v0.61.1-0.20260806010916-184d081eef3e
+go: downloading github.com/refraction-networking/utls v1.8.3-0.20260301010127-aa6edf4b11af
+go: downloading golang.org/x/net v0.58.0
+go: downloading golang.org/x/sync v0.22.0
+go: downloading github.com/robfig/cron/v3 v3.0.1
+go: downloading github.com/cloudflare/circl v1.6.5
+go: downloading lukechampine.com/blake3 v1.4.1
+go: downloading github.com/pires/go-proxyproto v0.15.0
+go: downloading golang.org/x/sys v0.47.0
+go: downloading golang.org/x/crypto v0.55.0
+go: downloading github.com/vishvananda/netlink v1.3.1
+go: downloading golang.zx2c4.com/wireguard v0.0.0-20250521234502-f333402bd9cb
+go: downloading gvisor.dev/gvisor v0.0.0-20260122175437-89a5d21be8f0
+go: downloading github.com/xtls/reality v0.0.0-20260908062103-8cdf7bf9c7f0
+go: downloading github.com/miekg/dns v1.1.73
+go: downloading github.com/gorilla/websocket v1.5.3
+go: downloading github.com/andybalholm/brotli v1.0.6
+go: downloading github.com/klauspost/compress v1.17.4
+go: downloading go4.org/netipx v0.0.0-20231129151722-fdeea329fbba
+go: downloading github.com/klauspost/cpuid/v2 v2.4.0
+go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20260526163538-3dc84a4a5aaa
+go: downloading github.com/google/uuid v1.6.0
+go: downloading github.com/sagernet/sing-shadowsocks v0.2.7
+go: downloading github.com/sagernet/sing v0.5.1
+go: downloading github.com/ghodss/yaml v1.0.1-0.20220118164431-d8423dcdf344
+go: downloading github.com/pelletier/go-toml v1.9.5
+go: downloading github.com/vishvananda/netns v0.0.5
+go: downloading github.com/google/btree v1.1.2
+go: downloading golang.org/x/time v0.14.0
+go: downloading github.com/quic-go/qpack v0.6.0
+go: downloading golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
+go: downloading github.com/juju/ratelimit v1.0.2
+go: downloading golang.org/x/text v0.41.0
+go: downloading github.com/libp2p/go-nat v1.0.1-0.20250821073202-01afc089f138
+go: downloading github.com/pion/stun/v3 v3.1.7
+go: downloading gopkg.in/yaml.v2 v2.4.0
+go: downloading github.com/huin/goupnp v1.2.0
+go: downloading github.com/jackpal/go-nat-pmp v1.0.2
+go: downloading github.com/koron/go-ssdp v0.0.4
+go: downloading github.com/libp2p/go-netroute v0.2.1
+go: downloading github.com/pion/dtls/v3 v3.1.5
+go: downloading github.com/pion/logging v0.2.4
+go: downloading github.com/pion/transport/v4 v4.1.0
+go: downloading github.com/google/gopacket v1.1.19
+go: downloading github.com/wlynxg/anet v0.0.5
+Xray 26.9.13 (Xray, Penetrates Everything.) 67191ff (go1.27.1 linux/amd64)
+mask: {"tcp":[{"type":"fragment","settings":{"packets":"tlshello","lengths":["0","104","1"],"delays":["0"],"maxSplit":"0"}},{"type":"fragment","settings":{"packets":"1-1","lengths":["114","1"],"delays":["1"],"maxSplit":"11"}}]}
+ciphers: TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+==== 1. xray run -test on a VLESS+WS+TLS outbound ====
+Xray 26.9.13 (Xray, Penetrates Everything.) 67191ff (go1.27.1 linux/amd64)
+A unified platform for anti-censorship.
+2026/10/02 10:51:31.518753 [Info] infra/conf/serial: Reading config: &{Name:vless.json Format:json}
+2026/10/02 10:51:31.519498 [Warning] common/errors: The feature WebSocket transport (with ALPN http/1.1, etc.) is deprecated, not recommended for using and might be removed. Please migrate to XHTTP H2 & H3 as soon as possible.
+Configuration OK.
+==== 2. live HTTPS fetch, ClientHello pieces counted ====
+-- baseline: http 200
+  out #1 517
+  out #2 517
+  pieces before the server answered: 2
+-- revive: http 200
+  pieces before the server answered: 0
+
+---- gradle test reports ----
