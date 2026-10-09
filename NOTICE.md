@@ -4,7 +4,7 @@ ParsV2R is a fork of **v2rayNG** by 2dust.
 
 - Upstream: https://github.com/2dust/v2rayNG
 - Licence: GPL-3.0
-- Forked at: v2rayNG 2.3.8
+- Forked at: v2rayNG 2.3.8, updated to upstream 2.3.10
 
 Effectively all of the code in this repository is upstream's work. This fork changes the
 application id, the name, the icon, the colour palette and the update endpoints. The engineering

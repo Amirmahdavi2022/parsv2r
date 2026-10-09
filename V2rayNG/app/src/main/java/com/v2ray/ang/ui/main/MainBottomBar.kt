@@ -1,5 +1,7 @@
 package com.v2ray.ang.ui.main
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,12 +23,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -34,6 +40,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import com.v2ray.ang.R
 
 // The connect dock. Same inputs and actions as upstream's bar (tap the text to test the
@@ -116,6 +123,12 @@ fun MainBottomBar(
 @Composable
 private fun ConnectButton(isRunning: Boolean, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
+    // Upstream's start spin (2.3.9): two turns over 3s on tap, reset once the service is stopped.
+    val scope = rememberCoroutineScope()
+    val rotation = remember { Animatable(0f) }
+    LaunchedEffect(isRunning) {
+        if (!isRunning) rotation.snapTo(0f)
+    }
     val fill = if (isRunning) {
         Brush.verticalGradient(listOf(goldTop, goldBottom))
     } else {
@@ -128,7 +141,12 @@ private fun ConnectButton(isRunning: Boolean, onClick: () -> Unit) {
             .clip(CircleShape)
             .background(fill)
             .border(1.5.dp, scheme.primary.copy(alpha = if (isRunning) 0.9f else 0.6f), CircleShape)
-            .clickable(onClick = onClick),
+            .clickable(onClick = {
+                if (!isRunning) {
+                    scope.launch { rotation.animateTo(720f, tween(durationMillis = 3000)) }
+                }
+                onClick()
+            }),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -138,7 +156,9 @@ private fun ConnectButton(isRunning: Boolean, onClick: () -> Unit) {
                 if (isRunning) R.string.acc_stop else R.string.acc_start
             ),
             tint = if (isRunning) Color(0xFF2A1A00) else scheme.primary,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier
+                .size(28.dp)
+                .graphicsLayer { rotationZ = rotation.value }
         )
     }
 }

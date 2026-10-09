@@ -7,12 +7,12 @@ import com.v2ray.ang.enums.AetherProtocol
 import com.v2ray.ang.enums.AetherScanMode
 import com.v2ray.ang.enums.AetherTransport
 import com.v2ray.ang.enums.EConfigType
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 class AetherFmtTest {
 
@@ -119,7 +119,7 @@ class AetherFmtTest {
     fun aNodeLeftToTheScannerCarriesNoEndpoint() {
         val uri = link(profile {})
 
-        assertTrue("uri should hold only a query: $uri", uri.startsWith("aether://?"))
+        assertTrue(uri.startsWith("aether://?"), "uri should hold only a query: $uri")
 
         val parsed = AetherFmt.parse(uri)
         assertNull(parsed?.server)
@@ -133,7 +133,7 @@ class AetherFmtTest {
             server = "2606:4700:d0::a29f:c001"
             serverPort = "443"
         })
-        assertTrue("uri should bracket the address: $uri", uri.startsWith("aether://[2606:4700:d0::a29f:c001]:443?"))
+        assertTrue(uri.startsWith("aether://[2606:4700:d0::a29f:c001]:443?"), "uri should bracket the address: $uri")
 
         val parsed = AetherFmt.parse(uri)
         assertEquals("2606:4700:d0::a29f:c001", parsed?.server)
@@ -159,7 +159,7 @@ class AetherFmtTest {
             serverPort = "443"
         })
 
-        assertTrue("uri should hold only a query: $uri", uri.startsWith("aether://?"))
+        assertTrue(uri.startsWith("aether://?"), "uri should hold only a query: $uri")
         assertNull(AetherFmt.parse("aether://162.159.198.1:443?protocol=gool#X")?.server)
     }
 

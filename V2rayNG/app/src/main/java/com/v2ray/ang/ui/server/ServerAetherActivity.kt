@@ -135,9 +135,10 @@ class ServerAetherActivity : BaseServerActivity() {
             onSaveClick = { saveServer(uiState) }
         ) {
             FormTextField(
-                stringResource(R.string.server_lab_remarks),
-                uiState.remarks,
-                { uiState.remarks = it }
+                label = stringResource(R.string.server_lab_remarks),
+                value = uiState.remarks,
+                onValueChange = { uiState.remarks = it },
+                isError = uiState.isRemarksError
             )
             AetherDropdownField(
                 label = R.string.aether_lab_protocol,
@@ -297,12 +298,12 @@ class ServerAetherActivity : BaseServerActivity() {
         }
     }
 
+    // Aether has no address or port of its own, so only the name is checked, shown inline like the other forms.
     override fun validateBasicConfig(state: ServerUiState): Boolean {
-        if (state.remarks.isBlank()) {
-            toast(R.string.server_lab_remarks)
-            return false
-        }
-        return true
+        state.isRemarksError = state.remarks.isBlank()
+        state.isAddressError = false
+        state.isPortError = false
+        return !state.isRemarksError
     }
 
     override fun validateProtocolConfig(config: ProfileItem): Boolean {

@@ -7,20 +7,19 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.yield
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
-import org.junit.Rule
-import org.junit.Test
-import org.junit.rules.TemporaryFolder
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 class AetherIdentityManagerTest {
 
-    @get:Rule
-    val folder = TemporaryFolder()
+    @TempDir
+    lateinit var root: File
 
     private val quotes = "\"\"\""
 
@@ -40,7 +39,8 @@ class AetherIdentityManagerTest {
         ).joinToString("\n")
 
     private fun workDir(vararg files: Pair<String, String>): File =
-        folder.newFolder("aether").apply {
+        File(root, "aether").apply {
+            mkdirs()
             files.forEach { (name, text) -> File(this, name).writeText(text) }
         }
 
@@ -79,7 +79,7 @@ class AetherIdentityManagerTest {
 
         assertNull(AetherIdentityManager.status(dir, AetherProtocol.MASQUE).primary)
         assertNull(AetherIdentityManager.status(dir, AetherProtocol.GOOL).secondary)
-        assertNull(AetherIdentityManager.status(File(folder.root, "absent"), AetherProtocol.WIREGUARD).primary)
+        assertNull(AetherIdentityManager.status(File(root, "absent"), AetherProtocol.WIREGUARD).primary)
     }
 
     @Test
@@ -106,7 +106,7 @@ class AetherIdentityManagerTest {
     @Test
     fun aSuccessfulRenewalReplacesTheOldKeys() = runBlocking {
         val dir = workDir(AetherIdentityManager.MASQUE_FILE to keyFile("old"))
-        val previous = File(folder.root, "aether-previous")
+        val previous = File(root, "aether-previous")
 
         val renewed = AetherIdentityManager.replaceIdentities(dir, previous) {
             File(dir, AetherIdentityManager.MASQUE_FILE).writeText(keyFile("new"))
@@ -121,7 +121,7 @@ class AetherIdentityManagerTest {
     @Test
     fun aFailedRenewalRestoresTheOldKeys() = runBlocking {
         val dir = workDir(AetherIdentityManager.MASQUE_FILE to keyFile("old"))
-        val previous = File(folder.root, "aether-previous")
+        val previous = File(root, "aether-previous")
 
         val renewed = AetherIdentityManager.replaceIdentities(dir, previous) {
             File(dir, AetherIdentityManager.WIREGUARD_FILE).writeText(keyFile("partial"))
@@ -137,7 +137,7 @@ class AetherIdentityManagerTest {
     @Test
     fun aCancelledRenewalRestoresTheOldKeys() = runBlocking {
         val dir = workDir(AetherIdentityManager.MASQUE_FILE to keyFile("old"))
-        val previous = File(folder.root, "aether-previous")
+        val previous = File(root, "aether-previous")
         val provisioning = CompletableDeferred<Unit>()
 
         val job = launch {
@@ -157,7 +157,7 @@ class AetherIdentityManagerTest {
     @Test
     fun aCancellationLandingRightAfterTheKeysWereSetAsideStillRestoresThem() = runBlocking {
         val dir = workDir(AetherIdentityManager.MASQUE_FILE to keyFile("old"))
-        val previous = File(folder.root, "aether-previous")
+        val previous = File(root, "aether-previous")
         var provisioned = false
 
         val job = launch {
@@ -183,8 +183,8 @@ class AetherIdentityManagerTest {
 
     @Test
     fun aFailedFirstRegistrationLeavesNoKeyBehind() = runBlocking {
-        val dir = File(folder.root, "aether")
-        val previous = File(folder.root, "aether-previous")
+        val dir = File(root, "aether")
+        val previous = File(root, "aether-previous")
 
         val renewed = AetherIdentityManager.replaceIdentities(dir, previous) {
             File(dir, AetherIdentityManager.MASQUE_FILE).writeText(keyFile("partial"))

@@ -2,10 +2,10 @@ package com.v2ray.ang.handler
 
 import com.google.gson.JsonParser
 import com.v2ray.ang.enums.EConfigType
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 class RevivePresetTest {
 
@@ -28,9 +28,9 @@ class RevivePresetTest {
             val st = o.getAsJsonObject("settings")
             // Same rules infra/conf/transport_finalmask.go enforces before it will start:
             val packets = st.get("packets").asString
-            if (packets != "tlshello") assertTrue("packets range must not start at 0", rangeMin(packets) > 0)
+            if (packets != "tlshello") assertTrue(rangeMin(packets) > 0, "packets range must not start at 0")
             val lengths = st.getAsJsonArray("lengths").map { it.asString }
-            assertTrue("last lengths entry min can't be 0", rangeMin(lengths.last()) > 0)
+            assertTrue(rangeMin(lengths.last()) > 0, "last lengths entry min can't be 0")
             assertTrue(st.getAsJsonArray("delays").size() > 0)
             st.get("maxSplit").asString.toLong()
         }
@@ -56,10 +56,10 @@ class RevivePresetTest {
         assertTrue(a(t = EConfigType.VMESS))
         assertTrue(a(t = EConfigType.TROJAN))
         assertTrue(a(mask = "  "))
-        assertFalse("switch off", a(on = false))
-        assertFalse("reality left alone", a(sec = "reality"))
-        assertFalse("no tls", a(sec = null))
-        assertFalse("own mask wins", a(mask = "{\"tcp\":[]}"))
+        assertFalse(a(on = false), "switch off")
+        assertFalse(a(sec = "reality"), "reality left alone")
+        assertFalse(a(sec = null), "no tls")
+        assertFalse(a(mask = "{\"tcp\":[]}"), "own mask wins")
         assertFalse(a(t = EConfigType.HYSTERIA2))
         assertFalse(a(t = EConfigType.WIREGUARD))
         assertFalse(a(t = EConfigType.SHADOWSOCKS))

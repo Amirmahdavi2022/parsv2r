@@ -4,9 +4,9 @@ import com.v2ray.ang.core.AetherDelayTester.Route
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.AetherProtocol
 import com.v2ray.ang.enums.EConfigType
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import java.io.DataInputStream
 import java.io.IOException
 import java.net.InetAddress
@@ -105,7 +105,7 @@ class AetherDelayTesterTest {
         HttpStub("204 No Content").use { http ->
             SocksStub().use { socks ->
                 val delay = AetherDelayTester.requestDelay(socks.port, "http://127.0.0.1:${http.port}/generate_204")
-                assertTrue("delay was $delay", delay >= 0)
+                assertTrue(delay >= 0, "delay was $delay")
             }
         }
     }
@@ -144,7 +144,7 @@ class AetherDelayTesterTest {
             val elapsedMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started)
             assertEquals(-1L, delay)
             // One attempt within the budget, no second one, and nothing left to OkHttp's own 10-second connect timeout.
-            assertTrue("gave up after $elapsedMs ms", elapsedMs < 6_000)
+            assertTrue(elapsedMs < 6_000, "gave up after $elapsedMs ms")
         }
     }
 

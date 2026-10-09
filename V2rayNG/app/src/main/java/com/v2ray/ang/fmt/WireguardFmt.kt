@@ -32,8 +32,10 @@ object WireguardFmt : FmtBase() {
         config.publicKey = queryParam["publickey"].orEmpty()
         config.preSharedKey = queryParam["presharedkey"]?.nullIfBlank()
         config.mtu = Utils.parseInt(queryParam["mtu"] ?: AppConfig.WIREGUARD_LOCAL_MTU)
+        config.remoteDNS = queryParam["dns"] ?: AppConfig.WIREGUARD_LOCAL_REMOTE_DNS
         config.reserved = queryParam["reserved"] ?: "0,0,0"
         config.dialMode = queryParam["dialMode"]
+        config.finalMask = (queryParam["fm"] ?: queryParam["finalmask"] ?: queryParam["finalMask"])?.nullIfBlank()
 
         return config
     }
@@ -82,6 +84,7 @@ object WireguardFmt : FmtBase() {
         config.remarks = System.currentTimeMillis().toString()
         config.localAddress = interfaceParams["address"] ?: AppConfig.WIREGUARD_LOCAL_ADDRESS_V4
         config.mtu = Utils.parseInt(interfaceParams["mtu"] ?: AppConfig.WIREGUARD_LOCAL_MTU)
+        config.remoteDNS = interfaceParams["dns"] ?: AppConfig.WIREGUARD_LOCAL_REMOTE_DNS
         config.publicKey = peerParams["publickey"].orEmpty()
         config.preSharedKey = peerParams["presharedkey"]?.nullIfBlank()
         val endpoint = peerParams["endpoint"].orEmpty()
@@ -94,6 +97,7 @@ object WireguardFmt : FmtBase() {
             config.serverPort = ""
         }
         config.reserved = peerParams["reserved"] ?: "0,0,0"
+        config.finalMask = (peerParams["finalmask"] ?: peerParams["fm"] ?: interfaceParams["finalmask"] ?: interfaceParams["fm"])?.nullIfBlank()
 
         return config
     }
@@ -120,6 +124,10 @@ object WireguardFmt : FmtBase() {
             dicQuery["presharedkey"] = config.preSharedKey.removeWhiteSpace().orEmpty()
         }
         config.dialMode?.nullIfBlank()?.let { dicQuery["dialMode"] = it }
+        if (config.remoteDNS != null) {
+            dicQuery["dns"] = config.remoteDNS.removeWhiteSpace().orEmpty()
+        }
+        config.finalMask?.nullIfBlank()?.let { dicQuery["fm"] = it }
 
         return toUri(config, config.secretKey, dicQuery)
     }

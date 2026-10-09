@@ -131,12 +131,15 @@ object CoreServiceManager {
 
     /**
      * A start or reload failure whose message is a localized resource string, meant for the main
-     * screen. Every other failure reaches the UI without a reason: its message is technical and
-     * belongs in the log, and the UI shows only resource text.
+     * screen. Any other failure now reaches the UI with its raw message, as upstream does since 2.3.9.
      */
     private class StartFailure(message: String) : RuntimeException(message)
 
-    private fun userFacingReason(e: Exception): String = if (e is StartFailure) e.message.orEmpty() else ""
+    // Our own StartFailure carries a translated reason; anything else gets upstream's raw detail
+    // (2.3.9 "Show service start failure details") instead of the generic toast.
+    private fun userFacingReason(e: Exception): String =
+        if (e is StartFailure) e.message.orEmpty()
+        else e.message?.takeUnless { it.isBlank() } ?: e.javaClass.simpleName
 
     @Throws(Exception::class)
     private fun doStartCoreLoop(service: Service, vpnInterface: ParcelFileDescriptor?) {
