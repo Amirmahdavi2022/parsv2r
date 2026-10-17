@@ -6,7 +6,7 @@
 
 کلاینت V2Ray برای اندروید، با هسته‌ی Aether
 
-[دانلود آخرین نسخه](https://github.com/Amirmahdavi2022/parsv2r/releases/latest) · [کانال تلگرام](https://t.me/parsv2r)
+[دانلود آخرین نسخه](https://github.com/kitewright-dev/parsv2r/releases/latest) · [کانال تلگرام](https://t.me/parsv2r)
 
 </div>
 
@@ -84,7 +84,7 @@ ParsV2R یه اپ برای وصل شدن با کانفیگ‌های V2Ray و Xra
 
 ## دانلود و نصب
 
-همه‌ی نسخه‌ها تو صفحه‌ی [Releases](https://github.com/Amirmahdavi2022/parsv2r/releases/latest) هستن.
+همه‌ی نسخه‌ها تو صفحه‌ی [Releases](https://github.com/kitewright-dev/parsv2r/releases/latest) هستن.
 
 | فایل | برای کدوم گوشی |
 |---|---|
@@ -100,23 +100,16 @@ ParsV2R یه اپ برای وصل شدن با کانفیگ‌های V2Ray و Xra
 
 ## سوال یا مشکل
 
-تو [کانال تلگرام](https://t.me/parsv2r) آپدیت‌ها رو میذارم. اگه به مشکلی خوردی یه [Issue](https://github.com/Amirmahdavi2022/parsv2r/issues) باز کن و اگه میتونی اسکرین‌شات لاگ رو هم بذار.
+تو [کانال تلگرام](https://t.me/parsv2r) آپدیت‌ها رو میذارم. اگه به مشکلی خوردی یه [Issue](https://github.com/kitewright-dev/parsv2r/issues) باز کن و اگه میتونی اسکرین‌شات لاگ رو هم بذار.
 
 اگه اپ به کارت اومد یه ستاره به ریپو بده، خیلی کمک میکنه که بیشتر دیده بشه.
 
-## دمشون گرم
+## لایسنس
 
-این اپ بدون کار این بچه‌ها ساخته نمیشد:
-
-- [v2rayNG](https://github.com/2dust/v2rayNG) از 2dust که کل پایه‌ی اپه
-- [PattNG](https://github.com/patterniha/PattNG) از patterniha که Aether و پچ‌های Xray رو اضافه کرده بود
-- [Aether](https://github.com/CluvexStudio/aether) از CluvexStudio
-- [Xray-core](https://github.com/XTLS/Xray-core) و [hev-socks5-tunnel](https://github.com/heiher/hev-socks5-tunnel)
-
-جزئیات بیشتر تو [NOTICE.md](NOTICE.md) هست. لایسنس GPL-3.0، مثل خود v2rayNG.
+GPL-3.0. لایسنس کدهای استفاده‌شده تو [NOTICE.md](NOTICE.md) هست.
 
 </div>
 
 ---
 
-**English:** ParsV2R is an Android V2Ray/Xray client based on v2rayNG, with the Aether (WARP/MASQUE) core from PattNG built in, so you can connect without any config. Grab the `universal` APK from [Releases](https://github.com/Amirmahdavi2022/parsv2r/releases/latest). GPL-3.0.
+**English:** ParsV2R is an Android V2Ray/Xray client based on v2rayNG, with the Aether (WARP/MASQUE) core from PattNG built in, so you can connect without any config. Grab the `universal` APK from [Releases](https://github.com/kitewright-dev/parsv2r/releases/latest). GPL-3.0.
